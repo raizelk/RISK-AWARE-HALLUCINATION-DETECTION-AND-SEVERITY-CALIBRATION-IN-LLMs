@@ -134,6 +134,32 @@ inconclusive evidence remains `UNKNOWN`, not `CONTRADICTED`. The model adapter
 checks label names and requires an explicit mapping if a model exposes
 ambiguous labels such as `LABEL_0`.
 
+## Stage 6: severity classification
+
+`SeverityClassifier` converts a `VerificationResult` into a `SeverityAssessment`.
+Supported claims receive no error severity. Unknown claims start at mild;
+contradicted claims start at moderate. A strong contradiction score or high
+response centrality can raise severity. A central claim in a detected
+high-impact domain is at least severe, and unsupported actionable advice in
+medical, safety, legal, or financial contexts is critical.
+
+The classifier returns its rationale and detected risk domains with the
+assessment. Centrality is caller-supplied on a `[0, 1]` scale; if unavailable,
+it defaults to `0`. Its thresholds and lexical domain/action indicators are
+transparent starting rules, not calibrated probabilities, and should be
+validated against a labeled severity dataset before drawing research
+conclusions.
+
+```python
+from hallucination_detector.severity import SeverityClassifier
+
+assessment = SeverityClassifier().classify(
+    verification_result,
+    centrality=0.8,
+)
+print(assessment.severity, assessment.rationale)
+```
+
 ## Project layout
 
 ```text
@@ -143,11 +169,13 @@ src/hallucination_detector/
 	retrieval.py    # Stage 4 BM25 + dense hybrid evidence retrieval
 	retrieval_metrics.py # Recall@K, Precision@K, and reciprocal-rank metrics
 	verification.py # Stage 5 semantic similarity + NLI verification
+	severity.py     # Stage 6 risk-aware claim severity assessment
 	generation.py   # provider-neutral three-model response generation and JSONL storage
 	demo.py         # small local example
 tests/
 	test_baseline.py
 	test_generation.py
+	test_severity.py
 ```
 
 ## Sprint 2: response generation
