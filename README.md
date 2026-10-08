@@ -209,6 +209,110 @@ evaluation, while confidence calibration compares each supplied confidence
 with the verified claim outcome. If confidence values are omitted, calibration
 is reported as unavailable instead of being treated as perfect.
 
+## Stage 9: three-model evaluation
+
+`ModelComparisonEvaluator` applies the same claim extraction, evidence
+retrieval, NLI verification, severity policy, and trust scorer to every model
+response. Supply one response for every configured model/dataset-item pair;
+incomplete matrices and duplicate responses are rejected.
+
+```python
+from hallucination_detector.evaluation import ModelComparisonEvaluator
+from hallucination_detector.generation import JsonlResponseStore
+from hallucination_detector.retrieval import HybridEvidenceRetriever
+from hallucination_detector.verification import (
+	EmbeddingSimilarityScorer,
+	HuggingFaceNLIModel,
+)
+
+# Use the same evidence corpus and detector configuration for every model.
+retriever = HybridEvidenceRetriever(corpus, embedder)
+nli_model = HuggingFaceNLIModel()
+similarity_scorer = EmbeddingSimilarityScorer(embedder)
+responses = JsonlResponseStore().load("data/responses.jsonl")
+evaluator = ModelComparisonEvaluator(
+	model_names=("model-a", "model-b", "model-c"),
+	dataset_item_ids=("item-1", "item-2"),
+	retriever=retriever,
+	nli_model=nli_model,
+	similarity_scorer=similarity_scorer,
+	top_k=5,
+	bootstrap_repetitions=2000,
+	random_seed=42,
+)
+
+# Optional consistency scores must come from repeated/paraphrased runs.
+report = evaluator.evaluate(
+	responses,
+	consistency_scores={
+		("model-a", "item-1"): 0.9,
+		("model-a", "item-2"): 0.8,
+		("model-b", "item-1"): 0.85,
+		("model-b", "item-2"): 0.9,
+		("model-c", "item-1"): 0.88,
+		("model-c", "item-2"): 0.92,
+	},
+)
+
+for metrics in report.model_metrics:
+	print(
+		metrics.model_name,
+		metrics.supported_rate,
+		metrics.hallucination_rate,
+		metrics.unknown_rate,
+		metrics.severity_counts,
+		metrics.average_trust_score,
+	)
+
+for comparison in report.paired_comparisons:
+	print(comparison.model_a, comparison.model_b,
+		  comparison.supported_rate_difference,
+		  comparison.mcnemar_exact_p_value)
+```
+
+For supervised verification metrics, pass `gold_labels` as a mapping from
+`(model_name, dataset_item_id, claim_id)` to a `VerificationLabel`. For retrieval
+Recall@K, pass `gold_evidence_ids` using the same keys and a collection of
+relevant evidence IDs. These labels must come from independent human annotation
+or another trusted gold dataset, not from the model outputs being evaluated.
+
+`hallucination_rate` here means the share of claims labeled **contradicted**;
+unknown claims have their own rate and are not counted as proven false.
+`verification_accuracy`, macro-F1 and per-class metrics require `gold_labels`;
+retrieval Recall@K requires `gold_evidence_ids`. Response-confidence Brier
+score and ECE are reported only when a response has confidence and all its
+claims have gold labels. Trust scores are reported only for responses with an
+externally measured consistency score; consistency is not assumed to be
+perfect. Pairwise comparisons use paired item-level supported rates with a
+deterministic bootstrap confidence interval and an exact McNemar test for
+whether either model produced a contradicted claim on an item. These statistics
+are descriptive and require sufficient labeled benchmark data before drawing
+research conclusions.
+
+## Stage 10: dashboard and research results
+
+Save the complete Stage 9 report, including claim-level verification and
+retrieved evidence, then install and launch the optional interactive dashboard:
+
+```python
+report.save_json("data/evaluation_report.json")
+```
+
+```powershell
+pip install -e ".[dashboard]"
+streamlit run src/hallucination_detector/dashboard.py
+```
+
+The dashboard also accepts an uploaded Stage 9 JSON report. It includes an
+overview of outcome rates, model comparison tables and paired statistics,
+severity distributions and critical-claim review, claim-level explanations,
+exact-offset highlighting in original responses, retrieved evidence with
+BM25/embedding/NLI signals, and trust-score components.
+Model and dataset-item filters drive the claim, risk, evidence, and trust
+inspection views. Claim details can be downloaded as CSV and the full report as
+JSON. The dashboard visualizes saved, versioned evaluation results; it does
+not regenerate model outputs or rerun verification.
+
 ## Project layout
 
 ```text
@@ -218,6 +322,8 @@ src/hallucination_detector/
 	retrieval.py    # Stage 4 BM25 + dense hybrid evidence retrieval
 	retrieval_metrics.py # Recall@K, Precision@K, and reciprocal-rank metrics
 	verification.py # Stage 5 semantic similarity + NLI verification
+	evaluation.py   # Stage 9 common-pipeline model comparison and paired metrics
+	dashboard.py    # Stage 10 interactive research dashboard
 	severity.py     # Stage 6 risk-aware claim severity assessment
 	explainability.py # Stage 7 claim explanations and response highlighting
 	trust.py        # Stage 8 multi-signal, severity-aware trust scoring
@@ -226,6 +332,10 @@ src/hallucination_detector/
 tests/
 	test_baseline.py
 	test_generation.py
+	test_retrieval.py
+	test_verification.py
+	test_evaluation.py
+	test_dashboard.py
 	test_severity.py
 	test_explainability.py
 	test_trust.py

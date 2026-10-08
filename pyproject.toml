@@ -17,6 +17,11 @@ verification = [
 	"transformers>=4.40",
 	"torch>=2.0",
 ]
+dashboard = [
+	"streamlit>=1.40",
+	"plotly>=5.24",
+	"pandas>=2.2",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
