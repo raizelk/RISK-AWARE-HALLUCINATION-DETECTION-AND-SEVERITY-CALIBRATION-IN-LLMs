@@ -44,7 +44,7 @@ def verify_claim(claim: Claim, evidence: tuple[Evidence, ...], support_threshold
     """Classify a claim using transparent lexical evidence signals."""
     ranked = retrieve_evidence(claim, evidence)
     best_similarity = max((lexical_similarity(claim.text, item.text) for item in ranked), default=0.0)
-    if best_similarity >= support_threshold:
+    if best_similarity > support_threshold:
         label = VerificationLabel.SUPPORTED
         explanation = "The claim shares sufficient lexical evidence with the retrieved source."
     else:

@@ -34,7 +34,31 @@ and scoring implementations can be added independently under `src/`.
 src/hallucination_detector/
 	domain.py       # typed records shared by every sprint
 	baseline.py     # deterministic first-pass claim/evidence pipeline
+	generation.py   # provider-neutral three-model response generation and JSONL storage
 	demo.py         # small local example
 tests/
 	test_baseline.py
+	test_generation.py
+```
+
+## Sprint 2: response generation
+
+Provider integrations implement `LLMAdapter` and return `GeneratedText`. The
+generator preserves dataset/model order and emits `ModelResponse` records.
+Responses can be stored as reproducible JSONL without requiring a provider SDK:
+
+```python
+from hallucination_detector.generation import (
+    GeneratedText, JsonlResponseStore, PromptRecord, ResponseGenerator,
+    StaticLLMAdapter,
+)
+
+records = (PromptRecord("item-1", "What is the capital of Australia?"),)
+generator = ResponseGenerator((
+    StaticLLMAdapter("model-a", {"item-1": GeneratedText("Canberra.")}),
+    StaticLLMAdapter("model-b", {"item-1": GeneratedText("Sydney.")}),
+    StaticLLMAdapter("model-c", {"item-1": GeneratedText("Canberra.")}),
+))
+responses = generator.generate(records)
+JsonlResponseStore().save("data/responses.jsonl", responses)
 ```
