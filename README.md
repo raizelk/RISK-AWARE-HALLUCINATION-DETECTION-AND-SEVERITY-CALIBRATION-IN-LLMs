@@ -25,8 +25,62 @@ python -m pytest
 python -m hallucination_detector.demo
 ```
 
+## Stage 4: hybrid evidence retrieval
+
+`HybridEvidenceRetriever` ranks evidence passages with BM25 and dense embedding
+similarity. BM25 is implemented locally; dense vectors use the optional Sentence
+Transformers integration. Install the retrieval extra before using the real
+embedding model (the model is downloaded and cached on first use):
+
+```powershell
+pip install -e ".[retrieval]"
+```
+
+Example, after obtaining a `Claim` and trusted `Evidence` records:
+
+```python
+from hallucination_detector.domain import Claim, Evidence
+from hallucination_detector.retrieval import (
+	HybridEvidenceRetriever,
+	SentenceTransformerEmbedder,
+)
+
+evidence = (
+	Evidence("source-1", "Canberra is the capital city of Australia.", "reference"),
+	Evidence("source-2", "Sydney is the capital of New South Wales.", "reference"),
+)
+retriever = HybridEvidenceRetriever(evidence, SentenceTransformerEmbedder())
+results = retriever.retrieve(Claim("claim-1", "Canberra is Australia's capital."), top_k=3)
+
+for result in results:
+	print(result.rank, result.evidence.id, result.bm25_score,
+		  result.embedding_score, result.combined_score)
+```
+
+`bm25_score` is the raw BM25 value; `embedding_score` is cosine similarity
+mapped to `[0, 1]`; and `combined_score` uses the configured weights (0.5 each
+by default). Use `embedding_weight=0, bm25_weight=1` for BM25-only retrieval
+without the optional package or model download. Reuse one retriever instance
+across claims so indexed evidence embeddings are computed only once.
+
 The package is laid out so that retrieval, verification, severity, explainability,
 and scoring implementations can be added independently under `src/`.
+
+Evaluate retrieval separately using the gold evidence IDs for each claim:
+
+```python
+from hallucination_detector.retrieval_metrics import (
+	mean_reciprocal_rank,
+	precision_at_k,
+	recall_at_k,
+)
+
+ranked_ids = [item.evidence.id for item in results]
+gold_ids = {"source-1"}
+print(recall_at_k(ranked_ids, gold_ids, k=5))
+print(precision_at_k(ranked_ids, gold_ids, k=5))
+print(mean_reciprocal_rank([ranked_ids], [gold_ids]))
+```
 
 ## Project layout
 
@@ -34,6 +88,8 @@ and scoring implementations can be added independently under `src/`.
 src/hallucination_detector/
 	domain.py       # typed records shared by every sprint
 	baseline.py     # deterministic first-pass claim/evidence pipeline
+	retrieval.py    # Stage 4 BM25 + dense hybrid evidence retrieval
+	retrieval_metrics.py # Recall@K, Precision@K, and reciprocal-rank metrics
 	generation.py   # provider-neutral three-model response generation and JSONL storage
 	demo.py         # small local example
 tests/
