@@ -1,7 +1,14 @@
 """Stable records shared by dataset, retrieval, verification, and evaluation."""
 
 from dataclasses import dataclass, field
-from enum import StrEnum
+from enum import Enum
+from typing import Optional
+
+try:
+    from enum import StrEnum
+except ImportError:  # pragma: no cover - compatibility for Python < 3.11
+    class StrEnum(str, Enum):
+        pass
 
 
 class VerificationLabel(StrEnum):
@@ -17,14 +24,14 @@ class Severity(StrEnum):
     CRITICAL = "critical"
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class Evidence:
     id: str
     text: str
     source: str = ""
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class Claim:
     id: str
     text: str
@@ -32,7 +39,7 @@ class Claim:
     end: int = 0
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class VerificationResult:
     claim: Claim
     label: VerificationLabel
@@ -41,9 +48,9 @@ class VerificationResult:
     explanation: str = ""
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class ModelResponse:
     model_name: str
     dataset_item_id: str
     text: str
-    confidence: float | None = None
+    confidence: Optional[float] = None

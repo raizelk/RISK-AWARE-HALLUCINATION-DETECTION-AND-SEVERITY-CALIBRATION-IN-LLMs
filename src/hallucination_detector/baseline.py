@@ -9,14 +9,36 @@ from collections import Counter
 
 from .domain import Claim, Evidence, VerificationLabel, VerificationResult
 
+_ATOMIC_SPLIT_RE = re.compile(
+    r"""
+    (?<=[.!?])\s+
+    | \s*[;:]\s*
+    | \s+(?:and|but|however|although|though|while|whereas|because|so|yet|or|nor)\s+
+    | \s*(?:--|—)\s*
+    """,
+    flags=re.IGNORECASE | re.VERBOSE,
+)
+
 
 def extract_claims(response: str) -> tuple[Claim, ...]:
-    """Split a response into sentence-level claims for the first baseline."""
+    """Split a response into atomic factual claims while preserving offsets."""
+    if not response.strip():
+        return ()
+
+    parts = [part.strip() for part in _ATOMIC_SPLIT_RE.split(response) if part and part.strip()]
     claims: list[Claim] = []
-    for index, match in enumerate(re.finditer(r"[^.!?]+(?:[.!?]|$)", response)):
-        text = match.group(0).strip()
-        if text:
-            claims.append(Claim(id=f"claim-{index + 1}", text=text, start=match.start(), end=match.end()))
+    search_start = 0
+
+    for index, text in enumerate(parts, start=1):
+        match_start = response.find(text, search_start)
+        if match_start == -1:
+            match_start = response.find(text)
+        if match_start == -1:
+            continue
+        match_end = match_start + len(text)
+        claims.append(Claim(id=f"claim-{index}", text=text, start=match_start, end=match_end))
+        search_start = match_end
+
     return tuple(claims)
 
 

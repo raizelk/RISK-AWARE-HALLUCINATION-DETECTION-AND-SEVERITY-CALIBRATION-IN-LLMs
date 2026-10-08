@@ -10,6 +10,19 @@ def test_extract_claims_preserves_response_offsets():
     assert claims[1].text == "The moon is a planet!"
 
 
+def test_extract_claims_splits_multi_clause_sentences():
+    claims = extract_claims(
+        "Canberra is the capital of Australia and Sydney is the capital of New South Wales."
+    )
+
+    assert [claim.text for claim in claims] == [
+        "Canberra is the capital of Australia",
+        "Sydney is the capital of New South Wales.",
+    ]
+    assert claims[0].start == 0
+    assert claims[1].start > claims[0].start
+
+
 def test_lexical_similarity_is_zero_for_disjoint_text():
     assert lexical_similarity("cats", "quantum mechanics") == 0.0
 

@@ -10,12 +10,12 @@ from __future__ import annotations
 import json
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Protocol
+from typing import Optional, Protocol, Union
 
 from .domain import ModelResponse
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class PromptRecord:
     """A dataset item ready to be sent to a language model."""
 
@@ -23,12 +23,12 @@ class PromptRecord:
     prompt: str
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class GeneratedText:
     """Text and optional self-reported confidence returned by an adapter."""
 
     text: str
-    confidence: float | None = None
+    confidence: Optional[float] = None
 
 
 class LLMAdapter(Protocol):
@@ -40,7 +40,7 @@ class LLMAdapter(Protocol):
     def generate(self, record: PromptRecord) -> GeneratedText: ...
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class StaticLLMAdapter:
     """Deterministic adapter useful for tests and offline benchmark fixtures."""
 
@@ -98,7 +98,7 @@ class ResponseGenerator:
 class JsonlResponseStore:
     """Persist model responses as one JSON object per line."""
 
-    def save(self, path: str | Path, responses: tuple[ModelResponse, ...]) -> None:
+    def save(self, path: Union[str, Path], responses: tuple[ModelResponse, ...]) -> None:
         target = Path(path)
         target.parent.mkdir(parents=True, exist_ok=True)
         temporary = target.with_name(f".{target.name}.tmp")
@@ -111,7 +111,7 @@ class JsonlResponseStore:
             if temporary.exists():
                 temporary.unlink()
 
-    def load(self, path: str | Path) -> tuple[ModelResponse, ...]:
+    def load(self, path: Union[str, Path]) -> tuple[ModelResponse, ...]:
         source = Path(path)
         responses: list[ModelResponse] = []
         with source.open("r", encoding="utf-8") as stream:
