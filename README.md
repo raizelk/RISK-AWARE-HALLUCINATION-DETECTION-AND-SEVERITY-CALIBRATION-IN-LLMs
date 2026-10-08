@@ -160,6 +160,29 @@ assessment = SeverityClassifier().classify(
 print(assessment.severity, assessment.rationale)
 ```
 
+## Stage 7: claim-level explanations and highlighting
+
+`explain_response()` connects verified claims to their exact response spans,
+retrieved evidence, verification reasons, and optional Stage 6 severity
+assessments. It returns structured per-claim details and HTML with escaped
+response text and `<mark>` tags around each verified claim. Claim offsets must
+match the original response exactly; invalid or overlapping spans and
+mismatched severity assessments are rejected.
+
+```python
+from hallucination_detector.explainability import explain_response
+
+explanation = explain_response(
+    original_response,
+    (verification_result,),
+    (severity_assessment,),
+)
+print(explanation.highlighted_response_html)
+for item in explanation.claims:
+    print(item.claim.text, item.verification_label, item.severity)
+    print(item.evidence, item.verification_reason, item.severity_reason)
+```
+
 ## Project layout
 
 ```text
@@ -170,12 +193,14 @@ src/hallucination_detector/
 	retrieval_metrics.py # Recall@K, Precision@K, and reciprocal-rank metrics
 	verification.py # Stage 5 semantic similarity + NLI verification
 	severity.py     # Stage 6 risk-aware claim severity assessment
+	explainability.py # Stage 7 claim explanations and response highlighting
 	generation.py   # provider-neutral three-model response generation and JSONL storage
 	demo.py         # small local example
 tests/
 	test_baseline.py
 	test_generation.py
 	test_severity.py
+	test_explainability.py
 ```
 
 ## Sprint 2: response generation
