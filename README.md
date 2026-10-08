@@ -63,8 +63,8 @@ by default). Use `embedding_weight=0, bm25_weight=1` for BM25-only retrieval
 without the optional package or model download. Reuse one retriever instance
 across claims so indexed evidence embeddings are computed only once.
 
-The package is laid out so that retrieval, verification, severity, explainability,
-and scoring implementations can be added independently under `src/`.
+The package keeps retrieval, verification, severity, explainability, and scoring
+as independently testable components under `src/`.
 
 Evaluate retrieval separately using the gold evidence IDs for each claim:
 
@@ -82,6 +82,58 @@ print(precision_at_k(ranked_ids, gold_ids, k=5))
 print(mean_reciprocal_rank([ranked_ids], [gold_ids]))
 ```
 
+## Stage 5: semantic and NLI verification
+
+Stage 5 evaluates each retrieved evidence passage as the NLI premise and the
+claim as the hypothesis. Install the optional verification dependencies; the
+first use downloads/caches the embedding and NLI models:
+
+```powershell
+pip install -e ".[verification]"
+```
+
+```python
+from hallucination_detector.domain import Claim, Evidence
+from hallucination_detector.retrieval import (
+	HybridEvidenceRetriever,
+	SentenceTransformerEmbedder,
+)
+from hallucination_detector.verification import (
+	EmbeddingSimilarityScorer,
+	HuggingFaceNLIModel,
+	verify_claim_with_nli,
+)
+
+embedder = SentenceTransformerEmbedder()
+corpus = (
+	Evidence("source-1", "Canberra is the capital city of Australia.", "reference"),
+	Evidence("source-2", "Sydney is the capital of New South Wales.", "reference"),
+)
+claim = Claim("claim-1", "Canberra is the capital of Australia.")
+retriever = HybridEvidenceRetriever(corpus, embedder)
+retrieved = retriever.retrieve(claim, top_k=5)
+
+result = verify_claim_with_nli(
+	claim,
+	retrieved,
+	HuggingFaceNLIModel(),
+	EmbeddingSimilarityScorer(embedder),
+)
+print(result.label, result.support_score, result.contradiction_score)
+for item in result.evidence_scores:
+	print(item.evidence.id, item.similarity, item.entailment_probability,
+		  item.contradiction_probability, item.support_score, item.contradiction_score)
+```
+
+`verify_claim_with_nli()` returns `SUPPORTED`, `CONTRADICTED`, or `UNKNOWN`,
+plus similarity, retrieval, entailment, contradiction, and neutral signals for
+each candidate. Its initial adjusted scores are `NLI probability × retrieval
+score × semantic similarity`; the default decision thresholds are provisional
+and should be tuned on a manually labeled validation set. Missing or
+inconclusive evidence remains `UNKNOWN`, not `CONTRADICTED`. The model adapter
+checks label names and requires an explicit mapping if a model exposes
+ambiguous labels such as `LABEL_0`.
+
 ## Project layout
 
 ```text
@@ -90,6 +142,7 @@ src/hallucination_detector/
 	baseline.py     # deterministic first-pass claim/evidence pipeline
 	retrieval.py    # Stage 4 BM25 + dense hybrid evidence retrieval
 	retrieval_metrics.py # Recall@K, Precision@K, and reciprocal-rank metrics
+	verification.py # Stage 5 semantic similarity + NLI verification
 	generation.py   # provider-neutral three-model response generation and JSONL storage
 	demo.py         # small local example
 tests/

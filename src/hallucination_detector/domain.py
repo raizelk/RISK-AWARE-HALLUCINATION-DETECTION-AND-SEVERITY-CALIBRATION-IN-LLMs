@@ -40,12 +40,30 @@ class Claim:
 
 
 @dataclass(frozen=True)
+class VerificationEvidenceScore:
+    """Signals recorded for one evidence passage used to verify a claim."""
+
+    evidence: Evidence
+    retrieval_score: float
+    similarity: float
+    entailment_probability: float
+    contradiction_probability: float
+    neutral_probability: float
+    support_score: float
+    contradiction_score: float
+
+
+@dataclass(frozen=True)
 class VerificationResult:
     claim: Claim
     label: VerificationLabel
     evidence: tuple[Evidence, ...] = field(default_factory=tuple)
     similarity: float = 0.0
     explanation: str = ""
+    support_score: float = 0.0
+    contradiction_score: float = 0.0
+    neutral_score: float = 0.0
+    evidence_scores: tuple[VerificationEvidenceScore, ...] = field(default_factory=tuple)
 
 
 @dataclass(frozen=True)
