@@ -385,8 +385,9 @@ class ModelComparisonEvaluator:
             else None
         )
         macro_f1 = (
-            sum(metric.f1 for metric in class_metrics) / len(class_metrics)
-            if class_metrics
+            sum(metric.f1 for metric in class_metrics if metric.support > 0)
+            / sum(metric.support > 0 for metric in class_metrics)
+            if any(metric.support > 0 for metric in class_metrics)
             else None
         )
 
