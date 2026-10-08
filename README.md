@@ -183,6 +183,32 @@ for item in explanation.claims:
     print(item.evidence, item.verification_reason, item.severity_reason)
 ```
 
+## Stage 8: multi-signal trust scoring
+
+`TrustScorer` combines claim factuality, semantic alignment, response
+consistency, and confidence calibration into a bounded score in `[0, 1]`.
+Severity assessments add risk-aware penalties: mild, moderate, severe, and
+critical errors contribute progressively larger penalties. The scorer returns
+all component values and an auditable rationale rather than only one opaque
+number.
+
+```python
+from hallucination_detector.trust import TrustScorer
+
+trust = TrustScorer().score(
+    verifications,
+    severity_assessments=severity_assessments,
+    consistency_score=0.85,
+    confidences=(0.92, 0.40, 0.81),
+)
+print(trust.score, trust.factual_score, trust.severity_penalty)
+```
+
+`consistency_score` is supplied by a repeated or paraphrased-response
+evaluation, while confidence calibration compares each supplied confidence
+with the verified claim outcome. If confidence values are omitted, calibration
+is reported as unavailable instead of being treated as perfect.
+
 ## Project layout
 
 ```text
@@ -194,6 +220,7 @@ src/hallucination_detector/
 	verification.py # Stage 5 semantic similarity + NLI verification
 	severity.py     # Stage 6 risk-aware claim severity assessment
 	explainability.py # Stage 7 claim explanations and response highlighting
+	trust.py        # Stage 8 multi-signal, severity-aware trust scoring
 	generation.py   # provider-neutral three-model response generation and JSONL storage
 	demo.py         # small local example
 tests/
@@ -201,6 +228,7 @@ tests/
 	test_generation.py
 	test_severity.py
 	test_explainability.py
+	test_trust.py
 ```
 
 ## Sprint 2: response generation
