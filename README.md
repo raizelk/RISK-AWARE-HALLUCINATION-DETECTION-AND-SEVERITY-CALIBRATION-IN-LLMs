@@ -364,6 +364,66 @@ whether either model produced a contradicted claim on an item. These statistics
 are descriptive and require sufficient labeled benchmark data before drawing
 research conclusions.
 
+## Step 3: human claim annotations
+
+Generate a separate prediction-free worksheet for each reviewer from the same
+completed response matrix. Review each extracted claim first: set
+`claim_review_status` to `accepted` only when its text and span represent one
+atomic claim. Claims needing a split or merge must be corrected before labeling.
+Then fill `verification_label`, `evidence_ids`, `severity`, and `rationale`.
+Supported claims use a null severity; contradicted and unknown claims require a
+severity. Use only evidence IDs from the trusted evidence file, and cite the
+passages that are relevant to the claim.
+
+```powershell
+python scripts/export_annotation_template.py `
+	--responses data/pilot-responses.jsonl `
+	--output data/annotations/reviewer-a.jsonl `
+	--annotator-id reviewer-a
+```
+
+The exporter requires a valid benchmark freeze manifest. For pipeline testing
+only, an unfrozen pilot can be explicitly allowed with
+`--allow-unfrozen-pilot`; those labels must not be used as final research gold.
+Have at least two reviewers annotate independently, then compare their labels:
+
+```powershell
+python scripts/check_annotations.py `
+	--responses data/pilot-responses.jsonl `
+	--compare data/annotations/reviewer-a.jsonl data/annotations/reviewer-b.jsonl
+```
+
+Adjudicate disagreements into a third file with one row per claim, set
+`annotation_status` to `adjudicated`, and record the adjudicator in
+`annotator_id`. Validate coverage and labels before evaluation:
+
+```powershell
+python scripts/check_annotations.py `
+	--responses data/pilot-responses.jsonl `
+	--adjudicated data/annotations/adjudicated.jsonl `
+	--require-complete
+```
+
+The adjudicated loader checks response/claim IDs, exact claim text and offsets,
+evidence IDs, severity, and rationale. It provides the maps accepted by the
+evaluator and retains severity labels for risk-calibration analysis:
+
+```python
+from hallucination_detector.annotations import load_adjudicated_annotations
+
+gold = load_adjudicated_annotations(
+		"data/annotations/adjudicated.jsonl",
+		responses,
+		known_evidence_ids,
+		require_complete=True,
+)
+report = evaluator.evaluate(
+		responses,
+		gold_labels=gold.labels,
+		gold_evidence_ids=gold.evidence_ids,
+)
+```
+
 ## Stage 10: dashboard and research results
 
 Save the complete Stage 9 report, including claim-level verification and
