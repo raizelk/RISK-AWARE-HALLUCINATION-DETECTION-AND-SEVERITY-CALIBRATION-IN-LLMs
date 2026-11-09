@@ -426,6 +426,38 @@ Provider integrations implement `LLMAdapter` and return `GeneratedText`. The
 generator preserves dataset/model order and emits `ModelResponse` records.
 Responses can be stored as reproducible JSONL without requiring a provider SDK:
 
+### Pilot runner
+
+The runner loads the healthcare JSONL files, checks evidence references and any
+benchmark freeze manifest, and checkpoints each model response. It defaults to
+five prompts and writes separate pilot output files. Provider adapters remain
+plugin-based because the project does not select a model provider. A factory
+module must expose a zero-argument function returning adapters that implement
+`model_name` and `generate(PromptRecord) -> GeneratedText`; adapters may expose
+a JSON-serializable `metadata` mapping for provider, model version, and
+generation parameters. Do not put credentials in adapter metadata.
+
+Install the optional retrieval and verification dependencies, then run a pilot:
+
+```powershell
+pip install -e ".[retrieval,verification]"
+python scripts/run_real_evaluation.py `
+	--adapter-factory my_adapters:build_adapters `
+	--max-items 5 `
+	--responses data/pilot-responses.jsonl `
+	--report data/pilot-evaluation-report.json
+```
+
+The adapter module must be importable by Python and return one adapter per
+model. Use `--generate-only` to collect responses without downloading the NLI
+and embedding models. Use `--resume` with the same files, adapter metadata, and
+item selection to continue an interrupted generation run; mismatched dataset
+hashes or model configurations are rejected. To evaluate saved responses
+without generating again, use `--evaluate-only --responses ...`. Use
+`--max-items 300` and new output paths only after the benchmark is reviewed and
+frozen. If no freeze manifest exists, the runner warns that results are pilot
+outputs and should not be treated as final research results.
+
 ```python
 from hallucination_detector.generation import (
     GeneratedText, JsonlResponseStore, PromptRecord, ResponseGenerator,
