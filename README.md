@@ -424,6 +424,53 @@ report = evaluator.evaluate(
 )
 ```
 
+## Step 4: development-only calibration
+
+After Step 1 is complete and adjudicated annotations exist, create a
+deterministic topic-level split. All ten prompt variants for a topic stay in
+one split; with the current 30 topics, the default is 18 train, 6 dev, and 6
+test topics. The command refuses to split an unfrozen benchmark and will not
+overwrite an existing split manifest:
+
+```powershell
+python scripts/create_topic_split.py
+```
+
+Use the development topics to tune thresholds from the cached support and
+contradiction scores in an evaluation report. The calibration command also
+reports retrieval Recall@1/3/5 and tunes the severity escalation cutoff against
+the adjudicated severity labels. Test labels are excluded from threshold
+selection. The output includes hashes of the benchmark, split, report, and
+annotation files:
+
+```powershell
+python scripts/calibrate_detector.py `
+	--report data/evaluation_report.json `
+	--responses data/responses.jsonl `
+	--annotations data/annotations/adjudicated.jsonl `
+	--split data/healthcare/topic-split.json `
+	--output data/calibration-dev.json
+```
+
+Once the choices are fixed, evaluate only the held-out test topics using the
+threshold values in `data/calibration-dev.json`. Replace the three threshold
+arguments below with those recorded values. `--annotations` adds verification,
+retrieval, and severity metrics against test gold labels; it does not fit new
+thresholds:
+
+```powershell
+python scripts/run_real_evaluation.py `
+	--evaluate-only `
+	--responses data/responses.jsonl `
+	--annotations data/annotations/adjudicated.jsonl `
+	--split-manifest data/healthcare/topic-split.json `
+	--dataset-split test `
+	--support-threshold 0.XX `
+	--contradiction-threshold 0.XX `
+	--severity-contradiction-threshold 0.XX `
+	--report data/test-evaluation-report.json
+```
+
 ## Stage 10: dashboard and research results
 
 Save the complete Stage 9 report, including claim-level verification and

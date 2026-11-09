@@ -277,14 +277,18 @@ def verify_claim_with_nli(
     support_evidence = max(evidence_scores, key=lambda item: item.support_score)
     contradiction_evidence = max(evidence_scores, key=lambda item: item.contradiction_score)
 
-    if best_support >= support_threshold and best_support > best_contradiction:
-        label = VerificationLabel.SUPPORTED
+    label = classify_verification_scores(
+        best_support,
+        best_contradiction,
+        support_threshold=support_threshold,
+        contradiction_threshold=contradiction_threshold,
+    )
+    if label is VerificationLabel.SUPPORTED:
         explanation = (
             f"Evidence {support_evidence.evidence.id!r} most strongly entails the claim "
             f"(adjusted support score {best_support:.3f})."
         )
-    elif best_contradiction >= contradiction_threshold and best_contradiction > best_support:
-        label = VerificationLabel.CONTRADICTED
+    elif label is VerificationLabel.CONTRADICTED:
         explanation = (
             f"Evidence {contradiction_evidence.evidence.id!r} most strongly contradicts "
             f"the claim (adjusted contradiction score {best_contradiction:.3f})."
@@ -307,6 +311,29 @@ def verify_claim_with_nli(
         neutral_score=best_neutral,
         evidence_scores=tuple(evidence_scores),
     )
+
+
+def classify_verification_scores(
+    support_score: float,
+    contradiction_score: float,
+    *,
+    support_threshold: float = 0.55,
+    contradiction_threshold: float = 0.55,
+) -> VerificationLabel:
+    """Apply the shared supported/contradicted/unknown decision rule to cached scores."""
+    _validate_threshold("support_threshold", support_threshold)
+    _validate_threshold("contradiction_threshold", contradiction_threshold)
+    for name, score in (
+        ("support_score", support_score),
+        ("contradiction_score", contradiction_score),
+    ):
+        if not math.isfinite(score) or not 0.0 <= score <= 1.0:
+            raise ValueError(f"{name} must be a finite value in [0, 1].")
+    if support_score >= support_threshold and support_score > contradiction_score:
+        return VerificationLabel.SUPPORTED
+    if contradiction_score >= contradiction_threshold and contradiction_score > support_score:
+        return VerificationLabel.CONTRADICTED
+    return VerificationLabel.UNKNOWN
 
 
 def _validate_threshold(name: str, threshold: float) -> None:
