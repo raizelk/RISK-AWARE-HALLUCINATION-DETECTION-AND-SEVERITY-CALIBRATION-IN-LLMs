@@ -25,6 +25,81 @@ python -m pytest
 python -m hallucination_detector.demo
 ```
 
+## Benchmark dataset
+
+The benchmark is evaluated in separate phases. **Phase 1 is healthcare-only**
+and contains 300 prompts in `data/healthcare/prompts.jsonl`. Finance remains
+outside this phase and can be added later as `data/finance/` without changing
+the healthcare evaluation set. The healthcare reference passages are in
+`data/healthcare/trusted_evidence.jsonl`.
+
+The original mixed six-healthcare/six-finance starter fixture remains in
+`data/prompts.jsonl` and `data/trusted_evidence.jsonl` for backward
+compatibility. Do not use it for the healthcare-only experiment.
+
+Each prompt record uses this format:
+
+```json
+{
+  "dataset_item_id": "healthcare-001",
+  "domain": "healthcare",
+  "task_type": "factual",
+  "risk_level": "high",
+  "prompt": "What is the recommended first-line treatment for ...?",
+  "reference_evidence_ids": ["healthcare-evidence-001"]
+}
+```
+
+Required prompt fields are:
+
+- `dataset_item_id`: stable unique identifier
+- `domain`: `healthcare` for the current phase
+- `task_type`: `factual`, `explanation`, or `advice`
+- `risk_level`: `moderate` or `high`
+- `prompt`: the user question sent unchanged to every model
+- `reference_evidence_ids`: one or more trusted evidence IDs
+
+Each trusted evidence record uses this format:
+
+```json
+{
+  "evidence_id": "healthcare-evidence-001",
+  "domain": "healthcare",
+  "text": "Reference passage used to verify model claims.",
+  "source": "World Health Organization",
+  "source_url": "https://www.who.int/...",
+  "publication_date": "2023-09-15"
+}
+```
+
+The evidence `text` is the content indexed by the retriever. The source
+metadata makes each verification result traceable. These are starter records
+for pipeline development; research results require source review, exact URL
+verification, version locking, and independent human annotation of generated
+claims.
+
+### How `trusted_evidence.jsonl` is created
+
+Trusted evidence is created independently from model outputs:
+
+1. Define a healthcare topic and the factual claims the benchmark should test.
+2. Locate an authoritative public source, preferably a government, public
+   health, or professional medical organization.
+3. Extract a short, self-contained passage that directly supports or refutes
+   claims about that topic. Do not write the passage from an LLM response.
+4. Record a stable `evidence_id`, domain, topic, passage text, source,
+   canonical URL, and publication or review date.
+5. Link each prompt to one or more evidence IDs using
+   `reference_evidence_ids`.
+6. Review the passage and URL manually, record the source version/date, and
+   have an independent annotator verify the link before using the data for
+   research metrics.
+
+The current healthcare file has 30 topic-level reference records. Ten
+question formulations are generated for each topic, producing 300 prompts.
+The generated records are a reproducible starter benchmark, not medical
+advice; the source URLs and wording must be reviewed before publication.
+
 ## Stage 4: hybrid evidence retrieval
 
 `HybridEvidenceRetriever` ranks evidence passages with BM25 and dense embedding
@@ -329,6 +404,10 @@ src/hallucination_detector/
 	trust.py        # Stage 8 multi-signal, severity-aware trust scoring
 	generation.py   # provider-neutral three-model response generation and JSONL storage
 	demo.py         # small local example
+data/
+	healthcare/
+		prompts.jsonl          # 300 healthcare prompts for Phase 1
+		trusted_evidence.jsonl # 30 healthcare reference passages
 tests/
 	test_baseline.py
 	test_generation.py
