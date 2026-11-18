@@ -522,6 +522,29 @@ inspection views. Claim details can be downloaded as CSV and the full report as
 JSON. The dashboard visualizes saved, versioned evaluation results; it does
 not regenerate model outputs or rerun verification.
 
+## Step 6: reproducible result packaging
+
+Package a final locked evaluation report for reproducible sharing. The package
+contains a compact research summary, model metrics CSV, paired-comparison CSV,
+and a release manifest with SHA-256 hashes of every included source artifact.
+The release directory must be empty or new; existing results are never silently
+overwritten.
+
+```powershell
+python scripts/package_research_results.py `
+  --report data/test-evaluation-report.json `
+  --output-dir data/research-release `
+  --provenance data/healthcare/benchmark_manifest.json `
+  --provenance data/healthcare/topic-split.json `
+  --provenance data/calibration-dev.json `
+  --provenance data/annotations/adjudicated.jsonl
+```
+
+For a pilot or local demonstration, the report can point to
+`data/evaluation_report.json`, but it must not replace a test release unless it
+was produced by the locked test gate. Use the release manifest to verify source
+and export hashes before publication.
+
 ## Project layout
 
 ```text
@@ -537,6 +560,7 @@ src/hallucination_detector/
 	explainability.py # Stage 7 claim explanations and response highlighting
 	trust.py        # Stage 8 multi-signal, severity-aware trust scoring
 	generation.py   # provider-neutral three-model response generation and JSONL storage
+	reporting.py    # reproducible research-result summaries and provenance manifests
 	demo.py         # small local example
 data/
 	healthcare/
