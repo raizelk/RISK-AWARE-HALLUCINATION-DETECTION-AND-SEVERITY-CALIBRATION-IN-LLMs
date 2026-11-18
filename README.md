@@ -471,6 +471,33 @@ python scripts/run_real_evaluation.py `
 	--report data/test-evaluation-report.json
 ```
 
+## Step 5: locked held-out test
+
+Run the held-out test only after the benchmark, topic split, and development
+calibration are frozen. The locked-test gate verifies the benchmark and split
+hashes, proves that calibration used no test items, validates the complete
+adjudicated response matrix, and rejects missing or out-of-range thresholds.
+It then invokes the shared evaluation pipeline once on test items only.
+
+```powershell
+python scripts/run_locked_test.py `
+  --prompts data/healthcare/prompts.jsonl `
+  --evidence data/healthcare/trusted_evidence.jsonl `
+  --benchmark-manifest data/healthcare/benchmark_manifest.json `
+  --split data/healthcare/topic-split.json `
+  --calibration data/calibration-dev.json `
+  --responses data/responses.jsonl `
+  --annotations data/annotations/adjudicated.jsonl `
+  --report data/test-evaluation-report.json
+```
+
+The preflight blocks if an artifact is missing or changed, test items overlap
+development items, the response matrix lacks test items, or the annotations are
+incomplete or invalid. Do not rerun threshold fitting after test errors or
+results appear: that would invalidate the held-out test. Preserve the locked-test
+report and its manifest alongside the benchmark, split, calibration, and
+adjudication hashes.
+
 ## Stage 10: dashboard and research results
 
 Save the complete Stage 9 report, including claim-level verification and
