@@ -545,6 +545,30 @@ For a pilot or local demonstration, the report can point to
 was produced by the locked test gate. Use the release manifest to verify source
 and export hashes before publication.
 
+## Step 7: final validation and release checklist
+
+Run code validation separately from the research-readiness check. The validation
+script does not fabricate missing benchmarks or results:
+
+```powershell
+python scripts/run_final_validation.py --run-tests
+```
+
+Before publication, also confirm:
+
+- Every evidence source URL is topic-specific and has been manually reviewed.
+- The benchmark freeze manifest exists and matches its prompt/evidence hashes.
+- Train/dev/test assignment is topic-disjoint and saved once.
+- Two independent annotators reviewed the claims and disagreements were adjudicated.
+- Calibration used development items only, with test labels hidden until the locked run.
+- The locked-test report and manifest exist and pass `run_locked_test.py`.
+- The dashboard has been reviewed for claim spans, evidence signals, and critical claims.
+- The result package contains the report, CSV summaries, provenance files, and hashes.
+
+The `run_final_validation.py` script reports release artifacts as present or
+missing and returns a blocked status until the real experiment inputs exist.
+Passing pytest alone verifies software behavior, not research validity.
+
 ## Project layout
 
 ```text
@@ -561,6 +585,9 @@ src/hallucination_detector/
 	trust.py        # Stage 8 multi-signal, severity-aware trust scoring
 	generation.py   # provider-neutral three-model response generation and JSONL storage
 	reporting.py    # reproducible research-result summaries and provenance manifests
+	runner.py       # benchmark loading and resumable response generation
+	annotations.py  # claim annotation and adjudication validation
+	calibration.py  # topic splits and development-only threshold calibration
 	demo.py         # small local example
 data/
 	healthcare/
