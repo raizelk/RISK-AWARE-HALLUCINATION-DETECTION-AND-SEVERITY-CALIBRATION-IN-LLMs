@@ -60,3 +60,13 @@ def test_store_rejects_malformed_record(tmp_path):
 def test_model_response_contract_remains_json_friendly():
     response = ModelResponse("model-a", "item-1", "answer", 0.5)
     assert response.dataset_item_id == "item-1"
+
+
+def test_static_adapter_metadata_is_preserved():
+    adapter = StaticLLMAdapter(
+        "pilot-model",
+        {"item-1": GeneratedText("answer")},
+        {"provider": "offline", "research_use": False},
+    )
+
+    assert adapter.metadata == {"provider": "offline", "research_use": False}

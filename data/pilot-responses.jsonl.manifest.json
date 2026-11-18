@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "prompt_sha256": "09461ac67e43d389b6d0725ba89324dc511fab60053812353e4b924968e68ee5",
+  "evidence_sha256": "fa26e77870bd5bc61dd6e1ed80900d743b621cf0396d914b7082d465779b2cac",
+  "dataset_item_ids": [
+    "healthcare-001",
+    "healthcare-002",
+    "healthcare-003",
+    "healthcare-004",
+    "healthcare-005"
+  ],
+  "adapters": [
+    {
+      "model_name": "pilot-model-a",
+      "adapter_type": "hallucination_detector.generation.StaticLLMAdapter",
+      "metadata": {
+        "provider": "offline",
+        "model_version": "pilot-deterministic-v1",
+        "research_use": false
+      }
+    },
+    {
+      "model_name": "pilot-model-b",
+      "adapter_type": "hallucination_detector.generation.StaticLLMAdapter",
+      "metadata": {
+        "provider": "offline",
+        "model_version": "pilot-deterministic-v1",
+        "research_use": false
+      }
+    },
+    {
+      "model_name": "pilot-model-c",
+      "adapter_type": "hallucination_detector.generation.StaticLLMAdapter",
+      "metadata": {
+        "provider": "offline",
+        "model_version": "pilot-deterministic-v1",
+        "research_use": false
+      }
+    }
+  ],
+  "expected_response_count": 15,
+  "completed_response_count": 15,
+  "completed_response_metadata": [
+    {
+      "model_name": "pilot-model-a",
+      "dataset_item_id": "healthcare-001",
+      "generated_at_utc": "2026-11-18T18:07:36.742017+00:00"
+    },
+    {
+      "model_name": "pilot-model-b",
+      "dataset_item_id": "healthcare-001",
+      "generated_at_utc": "2026-11-18T18:07:36.750423+00:00"
+    },
+    {
+      "model_name": "pilot-model-c",
+      "dataset_item_id": "healthcare-001",
+      "generated_at_utc": "2026-11-18T18:07:36.756696+00:00"
+    },
+    {
+      "model_name": "pilot-model-a",
+      "dataset_item_id": "healthcare-002",
+      "generated_at_utc": "2026-11-18T18:07:36.772999+00:00"
+    },
+    {
+      "model_name": "pilot-model-b",
+      "dataset_item_id": "healthcare-002",
+      "generated_at_utc": "2026-11-18T18:07:36.780791+00:00"
+    },
+    {
+      "model_name": "pilot-model-c",
+      "dataset_item_id": "healthcare-002",
+      "generated_at_utc": "2026-11-18T18:07:36.787861+00:00"
+    },
+    {
+      "model_name": "pilot-model-a",
+      "dataset_item_id": "healthcare-003",
+      "generated_at_utc": "2026-11-18T18:07:36.797005+00:00"
+    },
+    {
+      "model_name": "pilot-model-b",
+      "dataset_item_id": "healthcare-003",
+      "generated_at_utc": "2026-11-18T18:07:36.807152+00:00"
+    },
+    {
+      "model_name": "pilot-model-c",
+      "dataset_item_id": "healthcare-003",
+      "generated_at_utc": "2026-11-18T18:07:36.820015+00:00"
+    },
+    {
+      "model_name": "pilot-model-a",
+      "dataset_item_id": "healthcare-004",
+      "generated_at_utc": "2026-11-18T18:07:36.825286+00:00"
+    },
+    {
+      "model_name": "pilot-model-b",
+      "dataset_item_id": "healthcare-004",
+      "generated_at_utc": "2026-11-18T18:07:36.839471+00:00"
+    },
+    {
+      "model_name": "pilot-model-c",
+      "dataset_item_id": "healthcare-004",
+      "generated_at_utc": "2026-11-18T18:07:36.850501+00:00"
+    },
+    {
+      "model_name": "pilot-model-a",
+      "dataset_item_id": "healthcare-005",
+      "generated_at_utc": "2026-11-18T18:07:36.856304+00:00"
+    },
+    {
+      "model_name": "pilot-model-b",
+      "dataset_item_id": "healthcare-005",
+      "generated_at_utc": "2026-11-18T18:07:36.869307+00:00"
+    },
+    {
+      "model_name": "pilot-model-c",
+      "dataset_item_id": "healthcare-005",
+      "generated_at_utc": "2026-11-18T18:07:36.875315+00:00"
+    }
+  ],
+  "complete": true,
+  "created_at_utc": "2026-11-18T18:07:36.736274+00:00",
+  "updated_at_utc": "2026-11-18T18:07:49.561151+00:00"
+}

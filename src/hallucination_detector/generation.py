@@ -46,6 +46,7 @@ class StaticLLMAdapter:
 
     model_name: str
     responses: dict[str, GeneratedText]
+    metadata: Optional[dict[str, object]] = None
 
     def generate(self, record: PromptRecord) -> GeneratedText:
         try:

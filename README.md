@@ -615,7 +615,9 @@ Responses can be stored as reproducible JSONL without requiring a provider SDK:
 
 The runner loads the healthcare JSONL files, checks evidence references and any
 benchmark freeze manifest, and checkpoints each model response. It defaults to
-five prompts and writes separate pilot output files. Provider adapters remain
+five prompts and writes separate pilot output files. `pilot_adapters.py` provides
+three deterministic, offline adapters for pipeline testing only; it must not be
+used to generate research claims or compare real models. Provider adapters remain
 plugin-based because the project does not select a model provider. A factory
 module must expose a zero-argument function returning adapters that implement
 `model_name` and `generate(PromptRecord) -> GeneratedText`; adapters may expose
