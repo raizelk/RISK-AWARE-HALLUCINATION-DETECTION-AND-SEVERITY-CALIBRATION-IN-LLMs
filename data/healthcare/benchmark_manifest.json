@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "dataset": "healthcare-phase-1",
+  "frozen_at_utc": "2026-11-18T17:59:02.636787+00:00",
+  "prompt_count": 300,
+  "evidence_count": 30,
+  "topic_count": 30,
+  "files": {
+    "prompts.jsonl": "09461ac67e43d389b6d0725ba89324dc511fab60053812353e4b924968e68ee5",
+    "trusted_evidence.jsonl": "fa26e77870bd5bc61dd6e1ed80900d743b621cf0396d914b7082d465779b2cac"
+  }
+}

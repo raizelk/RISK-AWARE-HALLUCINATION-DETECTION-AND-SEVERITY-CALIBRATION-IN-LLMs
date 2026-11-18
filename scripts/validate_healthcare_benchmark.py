@@ -40,6 +40,10 @@ SOURCE_HOSTS = {
     "U.S. Food and Drug Administration": "fda.gov",
     "National Heart, Lung, and Blood Institute": "nhlbi.nih.gov",
     "National Institute of Diabetes and Digestive and Kidney Diseases": "niddk.nih.gov",
+    "National Institute of Mental Health": "nimh.nih.gov",
+    "American Red Cross": "redcross.org",
+    "America's Poison Centers": "poisonhelp.org",
+    "National Library of Medicine": "medlineplus.gov",
 }
 GENERIC_PATHS = {"/health", "/health-topics", "/drugs", "/what-to-do"}
 
