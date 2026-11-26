@@ -84,6 +84,28 @@ def test_bm25_only_mode_does_not_require_an_embedder():
     assert results[0].embedding_score == 0.0
 
 
+def test_topic_scoped_claims_only_retrieve_evidence_from_the_same_topic():
+    evidence = (
+        Evidence("e1", "Insulin regulates blood glucose.", topic_id="insulin"),
+        Evidence("e2", "Blood pressure is measured with two numbers.", topic_id="blood-pressure"),
+    )
+    retriever = HybridEvidenceRetriever(
+        evidence,
+        embedding_weight=0.0,
+        bm25_weight=1.0,
+    )
+
+    results = retriever.retrieve(
+        Claim("c1", "Insulin regulates blood glucose.", topic_id="insulin"),
+        top_k=5,
+    )
+
+    assert [result.evidence.id for result in results] == ["e1"]
+    assert retriever.retrieve(
+        Claim("c2", "Insulin regulates blood glucose.", topic_id="unknown-topic")
+    ) == ()
+
+
 def test_retriever_validates_weights_and_unique_evidence_ids():
     with pytest.raises(ValueError, match="sum to 1.0"):
         HybridEvidenceRetriever((), bm25_weight=0.4, embedding_weight=0.4)

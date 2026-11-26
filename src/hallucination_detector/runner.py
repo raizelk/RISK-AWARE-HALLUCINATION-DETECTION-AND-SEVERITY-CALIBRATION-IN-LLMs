@@ -45,7 +45,8 @@ def load_benchmark(
         if item_id in prompt_ids:
             raise ValueError(f"{prompt_file.name}:{line_number}: duplicate item ID {item_id!r}")
         prompt_ids.add(item_id)
-        prompts.append(PromptRecord(item_id, prompt))
+        topic_id = record.get("topic")
+        prompts.append(PromptRecord(item_id, prompt, topic_id if isinstance(topic_id, str) else None))
 
     evidence: list[Evidence] = []
     evidence_ids: set[str] = set()
@@ -61,7 +62,7 @@ def load_benchmark(
             )
         evidence_ids.add(evidence_id)
         evidence_topic[evidence_id] = topic
-        evidence.append(Evidence(evidence_id, text, source))
+        evidence.append(Evidence(evidence_id, text, source, topic_id=topic))
 
     for line_number, record in enumerate(prompt_records, start=1):
         references = record.get("reference_evidence_ids")
@@ -108,6 +109,7 @@ def run_generation(
     ResponseGenerator(adapters)
     target = Path(response_path)
     manifest_path = target.with_suffix(target.suffix + ".manifest.json")
+    errors_path = target.with_suffix(target.suffix + ".errors.jsonl")
     target.parent.mkdir(parents=True, exist_ok=True)
 
     adapter_records = [_adapter_manifest(adapter) for adapter in adapters]
@@ -153,6 +155,7 @@ def run_generation(
     )
     if not isinstance(completed_metadata, list):
         raise ValueError("Run manifest has invalid completed-response metadata.")
+    response_metadata = _read_response_metadata(target) if target.exists() else {}
     metadata_keys = {
         (item.get("model_name"), item.get("dataset_item_id"))
         for item in completed_metadata
@@ -163,6 +166,19 @@ def run_generation(
     for response in existing:
         key = (response.model_name, response.dataset_item_id)
         if key not in metadata_keys:
+            response_metadata.setdefault(
+                key,
+                {
+                    "prompt_id": response.dataset_item_id,
+                    "topic_id": response.topic_id,
+                    "model_version": _adapter_model_version(adapters, response.model_name),
+                    "generation_parameters": _adapter_generation_parameters(
+                        adapters, response.model_name
+                    ),
+                    "generated_at_utc": None,
+                    "recovered_after_interruption": True,
+                },
+            )
             completed_metadata.append(
                 {
                     "model_name": response.model_name,
@@ -198,23 +214,52 @@ def run_generation(
             try:
                 response = one_model_generator.generate((prompt,))[0]
             except Exception as error:
+                occurred_at = datetime.now(timezone.utc).isoformat()
+                error_record = {
+                    "schema_version": 1,
+                    "status": "error",
+                    "prompt_id": prompt.dataset_item_id,
+                    "topic_id": prompt.topic_id,
+                    "model_name": adapter.model_name,
+                    "model_version": _adapter_model_version(adapters, adapter.model_name),
+                    "generation_parameters": _adapter_generation_parameters(
+                        adapters, adapter.model_name
+                    ),
+                    "timestamp": occurred_at,
+                    "error_type": type(error).__name__,
+                    "error_message": "Generation failed; retry with --resume after resolving the provider error.",
+                }
+                _append_jsonl(errors_path, error_record)
                 manifest["last_error"] = {
                     "model_name": adapter.model_name,
                     "dataset_item_id": prompt.dataset_item_id,
                     "error_type": type(error).__name__,
-                    "occurred_at_utc": datetime.now(timezone.utc).isoformat(),
+                    "occurred_at_utc": occurred_at,
                 }
                 manifest["updated_at_utc"] = datetime.now(timezone.utc).isoformat()
                 _write_json_atomic(manifest_path, manifest)
                 raise
             existing.append(response)
             response_keys.add(key)
-            store.save(target, tuple(existing))
+            generated_at = datetime.now(timezone.utc).isoformat()
+            response_metadata[key] = {
+                "schema_version": 1,
+                "status": "success",
+                "prompt_id": prompt.dataset_item_id,
+                "topic_id": prompt.topic_id,
+                "model_version": _adapter_model_version(adapters, adapter.model_name),
+                "generation_parameters": _adapter_generation_parameters(
+                    adapters, adapter.model_name
+                ),
+                "timestamp": generated_at,
+                "prompt_sha256": hashlib.sha256(prompt.prompt.encode("utf-8")).hexdigest(),
+            }
+            store.save(target, tuple(existing), metadata=response_metadata)
             manifest["completed_response_metadata"].append(
                 {
                     "model_name": response.model_name,
                     "dataset_item_id": response.dataset_item_id,
-                    "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+                    "generated_at_utc": generated_at,
                 }
             )
             manifest.pop("last_error", None)
@@ -249,6 +294,71 @@ def _adapter_manifest(adapter: LLMAdapter) -> dict[str, object]:
     except (TypeError, ValueError) as error:
         raise TypeError(f"Adapter {adapter.model_name!r} metadata must be JSON serializable.") from error
     return record
+
+
+def _adapter_model_version(
+    adapters: tuple[LLMAdapter, ...], model_name: str
+) -> str:
+    for adapter in adapters:
+        if adapter.model_name == model_name:
+            metadata = getattr(adapter, "metadata", {})
+            if isinstance(metadata, Mapping):
+                version = metadata.get("model_version")
+                if isinstance(version, str) and version:
+                    return version
+            return adapter.model_name
+    raise ValueError(f"No adapter configured for model {model_name!r}.")
+
+
+def _adapter_generation_parameters(
+    adapters: tuple[LLMAdapter, ...], model_name: str
+) -> dict[str, object]:
+    for adapter in adapters:
+        if adapter.model_name == model_name:
+            metadata = getattr(adapter, "metadata", {})
+            if isinstance(metadata, Mapping):
+                parameters = metadata.get("generation_parameters", {})
+                if isinstance(parameters, Mapping):
+                    return dict(parameters)
+            return {}
+    raise ValueError(f"No adapter configured for model {model_name!r}.")
+
+
+def _read_response_metadata(
+    path: Path,
+) -> dict[tuple[str, str], dict[str, object]]:
+    metadata_fields = {
+        "schema_version",
+        "status",
+        "prompt_id",
+        "topic_id",
+        "model_version",
+        "generation_parameters",
+        "timestamp",
+        "prompt_sha256",
+        "recovered_after_interruption",
+    }
+    results: dict[tuple[str, str], dict[str, object]] = {}
+    with path.open("r", encoding="utf-8") as stream:
+        for line_number, line in enumerate(stream, start=1):
+            if not line.strip():
+                continue
+            value = json.loads(line)
+            if not isinstance(value, dict):
+                raise ValueError(f"Invalid response record on line {line_number}.")
+            model_name = value.get("model_name")
+            item_id = value.get("dataset_item_id")
+            if isinstance(model_name, str) and isinstance(item_id, str):
+                results[(model_name, item_id)] = {
+                    key: value[key] for key in metadata_fields if key in value
+                }
+    return results
+
+
+def _append_jsonl(path: Path, payload: Mapping[str, object]) -> None:
+    with path.open("a", encoding="utf-8", newline="\n") as stream:
+        stream.write(json.dumps(payload, ensure_ascii=False) + "\n")
+        stream.flush()
 
 
 def _load_jsonl(path: Path) -> list[dict[str, object]]:

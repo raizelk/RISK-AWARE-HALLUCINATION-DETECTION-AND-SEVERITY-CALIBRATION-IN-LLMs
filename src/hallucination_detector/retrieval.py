@@ -184,41 +184,47 @@ class HybridEvidenceRetriever:
         """Return the highest-ranked evidence passages for ``claim``."""
         if top_k < 1:
             raise ValueError("top_k must be at least 1.")
-        if not self._evidence:
+        candidate_indices = tuple(
+            index
+            for index, evidence in enumerate(self._evidence)
+            if claim.topic_id is None or evidence.topic_id == claim.topic_id
+        )
+        if not candidate_indices:
             return ()
 
         query_tokens = self._tokenize(claim.text)
         bm25_scores = tuple(
-            self._bm25_score(query_tokens, index)
-            for index in range(len(self._evidence))
+            self._bm25_score(query_tokens, index) for index in candidate_indices
         )
         max_bm25 = max(bm25_scores, default=0.0)
         normalized_bm25 = tuple(
             score / max_bm25 if max_bm25 > 0 else 0.0 for score in bm25_scores
         )
 
-        embedding_scores = [0.0] * len(self._evidence)
+        embedding_scores = [0.0] * len(candidate_indices)
         if self._embedding_weight > 0:
             assert self._embedder is not None
             query_embedding = self._encode((claim.text,))[0]
             embedding_scores = [
-                self._cosine_similarity(query_embedding, document_embedding)
-                for document_embedding in self._document_embeddings
+                self._cosine_similarity(
+                    query_embedding, self._document_embeddings[index]
+                )
+                for index in candidate_indices
             ]
 
         combined_scores = tuple(
             self._bm25_weight * normalized_bm25[index]
             + self._embedding_weight * embedding_scores[index]
-            for index in range(len(self._evidence))
+            for index in range(len(candidate_indices))
         )
         ordered_indices = sorted(
-            range(len(self._evidence)),
-            key=lambda index: (-combined_scores[index], index),
+            range(len(candidate_indices)),
+            key=lambda index: (-combined_scores[index], candidate_indices[index]),
         )[:top_k]
 
         return tuple(
             RetrievedEvidence(
-                evidence=self._evidence[index],
+                evidence=self._evidence[candidate_indices[index]],
                 bm25_score=bm25_scores[index],
                 embedding_score=embedding_scores[index],
                 combined_score=combined_scores[index],

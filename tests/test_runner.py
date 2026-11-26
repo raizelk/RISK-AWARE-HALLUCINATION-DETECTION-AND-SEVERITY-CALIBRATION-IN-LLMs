@@ -60,6 +60,7 @@ def test_load_benchmark_checks_links_and_applies_pilot_limit(tmp_path):
 
     assert [prompt.dataset_item_id for prompt in benchmark.prompts] == ["item-1"]
     assert benchmark.evidence[0].id == "evidence-a"
+    assert benchmark.evidence[0].topic_id == "topic-a"
     assert len(benchmark.prompt_sha256) == 64
     assert len(benchmark.evidence_sha256) == 64
     assert benchmark.is_frozen is False
@@ -96,6 +97,17 @@ def test_generation_checkpoints_and_matching_resume_skips_completed_calls(tmp_pa
     assert manifest["complete"] is True
     assert manifest["completed_response_count"] == 4
     assert manifest["adapters"][0]["metadata"]["model_version"] == "test-v1"
+    records = [
+        json.loads(line)
+        for line in response_path.read_text(encoding="utf-8").splitlines()
+    ]
+    assert records[0]["prompt_id"] == "item-1"
+    assert records[0]["topic_id"] == "topic-a"
+    assert records[0]["model_version"] == "test-v1"
+    assert records[0]["status"] == "success"
+    assert records[0]["generation_parameters"] == {}
+    assert records[0]["timestamp"]
+    assert len(records[0]["prompt_sha256"]) == 64
 
 
 def test_resume_rejects_changed_dataset_fingerprint(tmp_path):
@@ -155,6 +167,16 @@ def test_generation_failure_is_checkpointed_without_error_message_and_can_resume
     assert manifest["completed_response_count"] == 1
     assert manifest["last_error"]["dataset_item_id"] == "item-2"
     assert "private details" not in manifest_text
+    error_records = [
+        json.loads(line)
+        for line in response_path.with_suffix(".jsonl.errors.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+    ]
+    assert error_records[0]["prompt_id"] == "item-2"
+    assert error_records[0]["topic_id"] == "topic-a"
+    assert error_records[0]["error_type"] == "RuntimeError"
+    assert "private details" not in json.dumps(error_records)
     assert manifest["completed_response_metadata"][0]["generated_at_utc"]
 
     adapter.fail_on_second_call = False

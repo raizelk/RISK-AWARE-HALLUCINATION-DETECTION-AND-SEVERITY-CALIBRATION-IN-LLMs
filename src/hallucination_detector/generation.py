@@ -21,6 +21,7 @@ class PromptRecord:
 
     dataset_item_id: str
     prompt: str
+    topic_id: Optional[str] = None
 
 
 @dataclass(frozen=True)
@@ -91,6 +92,7 @@ class ResponseGenerator:
                         dataset_item_id=record.dataset_item_id,
                         text=generated.text,
                         confidence=generated.confidence,
+                        topic_id=record.topic_id,
                     )
                 )
         return tuple(responses)
@@ -99,14 +101,25 @@ class ResponseGenerator:
 class JsonlResponseStore:
     """Persist model responses as one JSON object per line."""
 
-    def save(self, path: Union[str, Path], responses: tuple[ModelResponse, ...]) -> None:
+    def save(
+        self,
+        path: Union[str, Path],
+        responses: tuple[ModelResponse, ...],
+        *,
+        metadata: dict[tuple[str, str], dict[str, object]] | None = None,
+    ) -> None:
         target = Path(path)
         target.parent.mkdir(parents=True, exist_ok=True)
         temporary = target.with_name(f".{target.name}.tmp")
         try:
             with temporary.open("w", encoding="utf-8", newline="\n") as stream:
                 for response in responses:
-                    stream.write(json.dumps(asdict(response), ensure_ascii=True) + "\n")
+                    record = asdict(response)
+                    extra = (metadata or {}).get(
+                        (response.model_name, response.dataset_item_id), {}
+                    )
+                    record.update(extra)
+                    stream.write(json.dumps(record, ensure_ascii=True) + "\n")
             temporary.replace(target)
         finally:
             if temporary.exists():
@@ -121,7 +134,18 @@ class JsonlResponseStore:
                     continue
                 try:
                     value = json.loads(line)
-                    responses.append(ModelResponse(**value))
+                    if not isinstance(value, dict):
+                        raise TypeError("response record must be a JSON object")
+                    response_fields = {
+                        "model_name",
+                        "dataset_item_id",
+                        "text",
+                        "confidence",
+                        "topic_id",
+                    }
+                    responses.append(
+                        ModelResponse(**{key: value[key] for key in response_fields if key in value})
+                    )
                 except (TypeError, ValueError, KeyError) as error:
                     raise ValueError(f"Invalid response record on line {line_number}") from error
         return tuple(responses)

@@ -29,6 +29,7 @@ class Evidence:
     id: str
     text: str
     source: str = ""
+    topic_id: Optional[str] = None
 
 
 @dataclass(frozen=True)
@@ -37,6 +38,7 @@ class Claim:
     text: str
     start: int = 0
     end: int = 0
+    topic_id: Optional[str] = None
 
 
 @dataclass(frozen=True)
@@ -72,3 +74,4 @@ class ModelResponse:
     dataset_item_id: str
     text: str
     confidence: Optional[float] = None
+    topic_id: Optional[str] = None

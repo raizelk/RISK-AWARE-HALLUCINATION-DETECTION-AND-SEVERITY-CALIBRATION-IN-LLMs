@@ -33,6 +33,8 @@ EVIDENCE_FIELDS = {
     "source",
     "source_url",
     "publication_date",
+    "last_reviewed_date",
+    "accessed_date",
 }
 SOURCE_HOSTS = {
     "World Health Organization": "who.int",
@@ -44,6 +46,8 @@ SOURCE_HOSTS = {
     "American Red Cross": "redcross.org",
     "America's Poison Centers": "poisonhelp.org",
     "National Library of Medicine": "medlineplus.gov",
+    "National Library of Medicine (MedlinePlus)": "medlineplus.gov",
+    "National Health Service": "nhs.uk",
 }
 GENERIC_PATHS = {"/health", "/health-topics", "/drugs", "/what-to-do"}
 
@@ -136,13 +140,21 @@ def validate() -> tuple[list[str], list[dict[str, object]], list[dict[str, objec
             issues.append(f"trusted_evidence.jsonl:{index}: URL host {hostname!r} does not match {source!r}")
         if parsed and parsed.path.rstrip("/") in GENERIC_PATHS:
             issues.append(f"trusted_evidence.jsonl:{index}: source_url is a generic landing page, not a topic-specific citation")
-        publication_date = record.get("publication_date")
-        try:
-            if not isinstance(publication_date, str):
-                raise ValueError
-            date.fromisoformat(publication_date)
-        except ValueError:
-            issues.append(f"trusted_evidence.jsonl:{index}: publication_date must be an ISO date")
+        for date_field in ("publication_date", "last_reviewed_date", "accessed_date"):
+            date_value = record.get(date_field)
+            if date_field == "accessed_date" and not isinstance(date_value, str):
+                issues.append(
+                    f"trusted_evidence.jsonl:{index}: accessed_date must be an ISO date"
+                )
+            elif date_value is not None:
+                try:
+                    if not isinstance(date_value, str):
+                        raise ValueError
+                    date.fromisoformat(date_value)
+                except ValueError:
+                    issues.append(
+                        f"trusted_evidence.jsonl:{index}: {date_field} must be an ISO date or null"
+                    )
 
     if len(prompts) != 300:
         issues.append(f"Expected 300 prompts for the frozen Phase 1 set; found {len(prompts)}")

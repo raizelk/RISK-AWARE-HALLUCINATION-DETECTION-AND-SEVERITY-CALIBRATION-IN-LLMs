@@ -1,0 +1,1830 @@
+{
+  "schema_version": 1,
+  "prompt_sha256": "93b5e08880ed213675d3c9f0767165469508161eebda542e4ab56a44b0e13756",
+  "evidence_sha256": "c435a0a8c8a2387a05a3c7b419dd2c3136d2ae6acef721bbe86b103a05e181db",
+  "dataset_item_ids": [
+    "healthcare-001",
+    "healthcare-002",
+    "healthcare-003",
+    "healthcare-004",
+    "healthcare-005",
+    "healthcare-006",
+    "healthcare-007",
+    "healthcare-008",
+    "healthcare-009",
+    "healthcare-010",
+    "healthcare-011",
+    "healthcare-012",
+    "healthcare-013",
+    "healthcare-014",
+    "healthcare-015",
+    "healthcare-016",
+    "healthcare-017",
+    "healthcare-018",
+    "healthcare-019",
+    "healthcare-020",
+    "healthcare-021",
+    "healthcare-022",
+    "healthcare-023",
+    "healthcare-024",
+    "healthcare-025",
+    "healthcare-026",
+    "healthcare-027",
+    "healthcare-028",
+    "healthcare-029",
+    "healthcare-030",
+    "healthcare-031",
+    "healthcare-032",
+    "healthcare-033",
+    "healthcare-034",
+    "healthcare-035",
+    "healthcare-036",
+    "healthcare-037",
+    "healthcare-038",
+    "healthcare-039",
+    "healthcare-040",
+    "healthcare-041",
+    "healthcare-042",
+    "healthcare-043",
+    "healthcare-044",
+    "healthcare-045",
+    "healthcare-046",
+    "healthcare-047",
+    "healthcare-048",
+    "healthcare-049",
+    "healthcare-050",
+    "healthcare-051",
+    "healthcare-052",
+    "healthcare-053",
+    "healthcare-054",
+    "healthcare-055",
+    "healthcare-056",
+    "healthcare-057",
+    "healthcare-058",
+    "healthcare-059",
+    "healthcare-060",
+    "healthcare-061",
+    "healthcare-062",
+    "healthcare-063",
+    "healthcare-064",
+    "healthcare-065",
+    "healthcare-066",
+    "healthcare-067",
+    "healthcare-068",
+    "healthcare-069",
+    "healthcare-070",
+    "healthcare-071",
+    "healthcare-072",
+    "healthcare-073",
+    "healthcare-074",
+    "healthcare-075",
+    "healthcare-076",
+    "healthcare-077",
+    "healthcare-078",
+    "healthcare-079",
+    "healthcare-080",
+    "healthcare-081",
+    "healthcare-082",
+    "healthcare-083",
+    "healthcare-084",
+    "healthcare-085",
+    "healthcare-086",
+    "healthcare-087",
+    "healthcare-088",
+    "healthcare-089",
+    "healthcare-090",
+    "healthcare-091",
+    "healthcare-092",
+    "healthcare-093",
+    "healthcare-094",
+    "healthcare-095",
+    "healthcare-096",
+    "healthcare-097",
+    "healthcare-098",
+    "healthcare-099",
+    "healthcare-100",
+    "healthcare-101",
+    "healthcare-102",
+    "healthcare-103",
+    "healthcare-104",
+    "healthcare-105",
+    "healthcare-106",
+    "healthcare-107",
+    "healthcare-108",
+    "healthcare-109",
+    "healthcare-110",
+    "healthcare-111",
+    "healthcare-112",
+    "healthcare-113",
+    "healthcare-114",
+    "healthcare-115",
+    "healthcare-116",
+    "healthcare-117",
+    "healthcare-118",
+    "healthcare-119",
+    "healthcare-120",
+    "healthcare-121",
+    "healthcare-122",
+    "healthcare-123",
+    "healthcare-124",
+    "healthcare-125",
+    "healthcare-126",
+    "healthcare-127",
+    "healthcare-128",
+    "healthcare-129",
+    "healthcare-130",
+    "healthcare-131",
+    "healthcare-132",
+    "healthcare-133",
+    "healthcare-134",
+    "healthcare-135",
+    "healthcare-136",
+    "healthcare-137",
+    "healthcare-138",
+    "healthcare-139",
+    "healthcare-140",
+    "healthcare-141",
+    "healthcare-142",
+    "healthcare-143",
+    "healthcare-144",
+    "healthcare-145",
+    "healthcare-146",
+    "healthcare-147",
+    "healthcare-148",
+    "healthcare-149",
+    "healthcare-150",
+    "healthcare-151",
+    "healthcare-152",
+    "healthcare-153",
+    "healthcare-154",
+    "healthcare-155",
+    "healthcare-156",
+    "healthcare-157",
+    "healthcare-158",
+    "healthcare-159",
+    "healthcare-160",
+    "healthcare-161",
+    "healthcare-162",
+    "healthcare-163",
+    "healthcare-164",
+    "healthcare-165",
+    "healthcare-166",
+    "healthcare-167",
+    "healthcare-168",
+    "healthcare-169",
+    "healthcare-170",
+    "healthcare-171",
+    "healthcare-172",
+    "healthcare-173",
+    "healthcare-174",
+    "healthcare-175",
+    "healthcare-176",
+    "healthcare-177",
+    "healthcare-178",
+    "healthcare-179",
+    "healthcare-180",
+    "healthcare-181",
+    "healthcare-182",
+    "healthcare-183",
+    "healthcare-184",
+    "healthcare-185",
+    "healthcare-186",
+    "healthcare-187",
+    "healthcare-188",
+    "healthcare-189",
+    "healthcare-190",
+    "healthcare-191",
+    "healthcare-192",
+    "healthcare-193",
+    "healthcare-194",
+    "healthcare-195",
+    "healthcare-196",
+    "healthcare-197",
+    "healthcare-198",
+    "healthcare-199",
+    "healthcare-200",
+    "healthcare-201",
+    "healthcare-202",
+    "healthcare-203",
+    "healthcare-204",
+    "healthcare-205",
+    "healthcare-206",
+    "healthcare-207",
+    "healthcare-208",
+    "healthcare-209",
+    "healthcare-210",
+    "healthcare-211",
+    "healthcare-212",
+    "healthcare-213",
+    "healthcare-214",
+    "healthcare-215",
+    "healthcare-216",
+    "healthcare-217",
+    "healthcare-218",
+    "healthcare-219",
+    "healthcare-220",
+    "healthcare-221",
+    "healthcare-222",
+    "healthcare-223",
+    "healthcare-224",
+    "healthcare-225",
+    "healthcare-226",
+    "healthcare-227",
+    "healthcare-228",
+    "healthcare-229",
+    "healthcare-230",
+    "healthcare-231",
+    "healthcare-232",
+    "healthcare-233",
+    "healthcare-234",
+    "healthcare-235",
+    "healthcare-236",
+    "healthcare-237",
+    "healthcare-238",
+    "healthcare-239",
+    "healthcare-240",
+    "healthcare-241",
+    "healthcare-242",
+    "healthcare-243",
+    "healthcare-244",
+    "healthcare-245",
+    "healthcare-246",
+    "healthcare-247",
+    "healthcare-248",
+    "healthcare-249",
+    "healthcare-250",
+    "healthcare-251",
+    "healthcare-252",
+    "healthcare-253",
+    "healthcare-254",
+    "healthcare-255",
+    "healthcare-256",
+    "healthcare-257",
+    "healthcare-258",
+    "healthcare-259",
+    "healthcare-260",
+    "healthcare-261",
+    "healthcare-262",
+    "healthcare-263",
+    "healthcare-264",
+    "healthcare-265",
+    "healthcare-266",
+    "healthcare-267",
+    "healthcare-268",
+    "healthcare-269",
+    "healthcare-270",
+    "healthcare-271",
+    "healthcare-272",
+    "healthcare-273",
+    "healthcare-274",
+    "healthcare-275",
+    "healthcare-276",
+    "healthcare-277",
+    "healthcare-278",
+    "healthcare-279",
+    "healthcare-280",
+    "healthcare-281",
+    "healthcare-282",
+    "healthcare-283",
+    "healthcare-284",
+    "healthcare-285",
+    "healthcare-286",
+    "healthcare-287",
+    "healthcare-288",
+    "healthcare-289",
+    "healthcare-290",
+    "healthcare-291",
+    "healthcare-292",
+    "healthcare-293",
+    "healthcare-294",
+    "healthcare-295",
+    "healthcare-296",
+    "healthcare-297",
+    "healthcare-298",
+    "healthcare-299",
+    "healthcare-300"
+  ],
+  "adapters": [
+    {
+      "model_name": "gemma2:2b",
+      "adapter_type": "hallucination_detector.provider_adapters.OpenAICompatibleAdapter",
+      "metadata": {
+        "provider": "ollama",
+        "model_version": "gemma2:2b",
+        "generation_parameters": {
+          "temperature": 0.2,
+          "top_p": 1.0,
+          "max_output_tokens": 1024,
+          "timeout_seconds": 300
+        }
+      }
+    }
+  ],
+  "expected_response_count": 300,
+  "completed_response_count": 300,
+  "completed_response_metadata": [
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-001",
+      "generated_at_utc": "2026-11-26T17:04:59.994676+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-002",
+      "generated_at_utc": "2026-11-26T17:05:09.147650+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-003",
+      "generated_at_utc": "2026-11-26T17:05:17.722994+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-004",
+      "generated_at_utc": "2026-11-26T17:05:29.959056+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-005",
+      "generated_at_utc": "2026-11-26T17:05:39.915498+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-006",
+      "generated_at_utc": "2026-11-26T17:05:51.690891+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-007",
+      "generated_at_utc": "2026-11-26T17:06:01.376760+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-008",
+      "generated_at_utc": "2026-11-26T17:06:14.282540+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-009",
+      "generated_at_utc": "2026-11-26T17:06:25.775148+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-010",
+      "generated_at_utc": "2026-11-26T17:06:31.883907+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-011",
+      "generated_at_utc": "2026-11-26T17:06:41.338330+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-012",
+      "generated_at_utc": "2026-11-26T17:07:02.965240+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-013",
+      "generated_at_utc": "2026-11-26T17:07:19.002913+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-014",
+      "generated_at_utc": "2026-11-26T17:07:41.185633+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-015",
+      "generated_at_utc": "2026-11-26T17:07:57.797620+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-016",
+      "generated_at_utc": "2026-11-26T17:08:11.475966+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-017",
+      "generated_at_utc": "2026-11-26T17:08:26.306918+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-018",
+      "generated_at_utc": "2026-11-26T17:08:43.242668+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-019",
+      "generated_at_utc": "2026-11-26T17:08:58.087350+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-020",
+      "generated_at_utc": "2026-11-26T17:09:06.867726+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-021",
+      "generated_at_utc": "2026-11-26T17:09:13.163742+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-022",
+      "generated_at_utc": "2026-11-26T17:09:27.468912+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-023",
+      "generated_at_utc": "2026-11-26T17:09:39.374691+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-024",
+      "generated_at_utc": "2026-11-26T17:09:57.880666+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-025",
+      "generated_at_utc": "2026-11-26T17:10:14.410881+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-026",
+      "generated_at_utc": "2026-11-26T17:10:29.226642+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-027",
+      "generated_at_utc": "2026-11-26T17:10:39.830738+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-028",
+      "generated_at_utc": "2026-11-26T17:10:57.918646+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-029",
+      "generated_at_utc": "2026-11-26T17:11:11.664782+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-030",
+      "generated_at_utc": "2026-11-26T17:11:26.894450+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-031",
+      "generated_at_utc": "2026-11-26T17:11:35.961438+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-032",
+      "generated_at_utc": "2026-11-26T17:11:52.756444+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-033",
+      "generated_at_utc": "2026-11-26T17:12:01.612834+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-034",
+      "generated_at_utc": "2026-11-26T17:12:18.788940+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-035",
+      "generated_at_utc": "2026-11-26T17:12:32.281414+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-036",
+      "generated_at_utc": "2026-11-26T17:12:44.234806+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-037",
+      "generated_at_utc": "2026-11-26T17:12:53.109750+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-038",
+      "generated_at_utc": "2026-11-26T17:13:07.883068+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-039",
+      "generated_at_utc": "2026-11-26T17:13:18.466575+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-040",
+      "generated_at_utc": "2026-11-26T17:13:28.240500+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-041",
+      "generated_at_utc": "2026-11-26T17:13:32.955184+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-042",
+      "generated_at_utc": "2026-11-26T17:13:47.026396+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-043",
+      "generated_at_utc": "2026-11-26T17:14:01.141506+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-044",
+      "generated_at_utc": "2026-11-26T17:14:15.554226+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-045",
+      "generated_at_utc": "2026-11-26T17:14:31.562849+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-046",
+      "generated_at_utc": "2026-11-26T17:14:47.421855+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-047",
+      "generated_at_utc": "2026-11-26T17:14:57.336635+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-048",
+      "generated_at_utc": "2026-11-26T17:15:15.991525+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-049",
+      "generated_at_utc": "2026-11-26T17:15:33.027376+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-050",
+      "generated_at_utc": "2026-11-26T17:15:43.802817+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-051",
+      "generated_at_utc": "2026-11-26T17:15:53.078068+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-052",
+      "generated_at_utc": "2026-11-26T17:16:09.664886+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-053",
+      "generated_at_utc": "2026-11-26T17:16:21.668174+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-054",
+      "generated_at_utc": "2026-11-26T17:16:38.346928+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-055",
+      "generated_at_utc": "2026-11-26T17:16:53.566903+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-056",
+      "generated_at_utc": "2026-11-26T17:17:09.210229+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-057",
+      "generated_at_utc": "2026-11-26T17:17:19.227251+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-058",
+      "generated_at_utc": "2026-11-26T17:17:35.505109+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-059",
+      "generated_at_utc": "2026-11-26T17:17:50.097016+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-060",
+      "generated_at_utc": "2026-11-26T17:18:00.208270+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-061",
+      "generated_at_utc": "2026-11-26T17:18:05.360408+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-062",
+      "generated_at_utc": "2026-11-26T17:18:22.411249+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-063",
+      "generated_at_utc": "2026-11-26T17:18:36.451707+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-064",
+      "generated_at_utc": "2026-11-26T17:18:52.578835+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-065",
+      "generated_at_utc": "2026-11-26T17:19:06.616078+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-066",
+      "generated_at_utc": "2026-11-26T17:19:21.093143+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-067",
+      "generated_at_utc": "2026-11-26T17:19:31.478823+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-068",
+      "generated_at_utc": "2026-11-26T17:19:52.487710+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-069",
+      "generated_at_utc": "2026-11-26T17:20:08.585473+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-070",
+      "generated_at_utc": "2026-11-26T17:20:18.978150+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-071",
+      "generated_at_utc": "2026-11-26T17:20:23.259443+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-072",
+      "generated_at_utc": "2026-11-26T17:20:40.099749+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-073",
+      "generated_at_utc": "2026-11-26T17:20:53.225912+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-074",
+      "generated_at_utc": "2026-11-26T17:21:11.382693+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-075",
+      "generated_at_utc": "2026-11-26T17:21:32.964473+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-076",
+      "generated_at_utc": "2026-11-26T17:21:46.855158+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-077",
+      "generated_at_utc": "2026-11-26T17:21:57.635746+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-078",
+      "generated_at_utc": "2026-11-26T17:22:13.419822+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-079",
+      "generated_at_utc": "2026-11-26T17:22:26.452405+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-080",
+      "generated_at_utc": "2026-11-26T17:22:36.493547+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-081",
+      "generated_at_utc": "2026-11-26T17:22:45.955958+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-082",
+      "generated_at_utc": "2026-11-26T17:23:02.010928+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-083",
+      "generated_at_utc": "2026-11-26T17:23:12.526049+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-084",
+      "generated_at_utc": "2026-11-26T17:23:25.630618+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-085",
+      "generated_at_utc": "2026-11-26T17:23:37.324009+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-086",
+      "generated_at_utc": "2026-11-26T17:23:49.955775+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-087",
+      "generated_at_utc": "2026-11-26T17:24:00.920591+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-088",
+      "generated_at_utc": "2026-11-26T17:24:16.732649+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-089",
+      "generated_at_utc": "2026-11-26T17:24:30.994164+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-090",
+      "generated_at_utc": "2026-11-26T17:24:40.862920+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-091",
+      "generated_at_utc": "2026-11-26T17:24:45.226764+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-092",
+      "generated_at_utc": "2026-11-26T17:25:01.283977+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-093",
+      "generated_at_utc": "2026-11-26T17:25:13.309709+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-094",
+      "generated_at_utc": "2026-11-26T17:25:28.100910+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-095",
+      "generated_at_utc": "2026-11-26T17:25:45.552677+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-096",
+      "generated_at_utc": "2026-11-26T17:26:02.197428+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-097",
+      "generated_at_utc": "2026-11-26T17:26:15.219830+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-098",
+      "generated_at_utc": "2026-11-26T17:26:38.973349+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-099",
+      "generated_at_utc": "2026-11-26T17:26:54.862870+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-100",
+      "generated_at_utc": "2026-11-26T17:27:03.549151+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-101",
+      "generated_at_utc": "2026-11-26T17:27:11.955954+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-102",
+      "generated_at_utc": "2026-11-26T17:27:28.557228+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-103",
+      "generated_at_utc": "2026-11-26T17:27:42.277063+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-104",
+      "generated_at_utc": "2026-11-26T17:28:00.987159+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-105",
+      "generated_at_utc": "2026-11-26T17:28:16.049024+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-106",
+      "generated_at_utc": "2026-11-26T17:28:33.684291+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-107",
+      "generated_at_utc": "2026-11-26T17:28:44.209294+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-108",
+      "generated_at_utc": "2026-11-26T17:29:03.104031+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-109",
+      "generated_at_utc": "2026-11-26T17:29:19.779204+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-110",
+      "generated_at_utc": "2026-11-26T17:29:33.370375+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-111",
+      "generated_at_utc": "2026-11-26T17:29:39.127367+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-112",
+      "generated_at_utc": "2026-11-26T17:29:54.867780+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-113",
+      "generated_at_utc": "2026-11-26T17:30:08.718657+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-114",
+      "generated_at_utc": "2026-11-26T17:30:24.729407+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-115",
+      "generated_at_utc": "2026-11-26T17:30:40.009735+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-116",
+      "generated_at_utc": "2026-11-26T17:30:52.953442+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-117",
+      "generated_at_utc": "2026-11-26T17:31:02.443711+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-118",
+      "generated_at_utc": "2026-11-26T17:31:14.807389+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-119",
+      "generated_at_utc": "2026-11-26T17:31:27.404923+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-120",
+      "generated_at_utc": "2026-11-26T17:31:37.028177+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-121",
+      "generated_at_utc": "2026-11-26T17:31:45.498313+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-122",
+      "generated_at_utc": "2026-11-26T17:32:05.655903+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-123",
+      "generated_at_utc": "2026-11-26T17:32:16.943659+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-124",
+      "generated_at_utc": "2026-11-26T17:32:33.837353+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-125",
+      "generated_at_utc": "2026-11-26T17:32:51.531694+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-126",
+      "generated_at_utc": "2026-11-26T17:33:05.451678+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-127",
+      "generated_at_utc": "2026-11-26T17:33:15.491453+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-128",
+      "generated_at_utc": "2026-11-26T17:33:29.598485+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-129",
+      "generated_at_utc": "2026-11-26T17:33:47.400927+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-130",
+      "generated_at_utc": "2026-11-26T17:33:57.445015+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-131",
+      "generated_at_utc": "2026-11-26T17:34:02.076507+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-132",
+      "generated_at_utc": "2026-11-26T17:34:20.543117+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-133",
+      "generated_at_utc": "2026-11-26T17:34:30.944288+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-134",
+      "generated_at_utc": "2026-11-26T17:34:46.895483+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-135",
+      "generated_at_utc": "2026-11-26T17:35:01.526514+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-136",
+      "generated_at_utc": "2026-11-26T17:35:14.506312+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-137",
+      "generated_at_utc": "2026-11-26T17:35:25.060132+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-138",
+      "generated_at_utc": "2026-11-26T17:35:44.618192+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-139",
+      "generated_at_utc": "2026-11-26T17:36:00.229807+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-140",
+      "generated_at_utc": "2026-11-26T17:36:08.625739+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-141",
+      "generated_at_utc": "2026-11-26T17:36:13.114286+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-142",
+      "generated_at_utc": "2026-11-26T17:36:31.310503+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-143",
+      "generated_at_utc": "2026-11-26T17:36:43.530423+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-144",
+      "generated_at_utc": "2026-11-26T17:37:01.583069+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-145",
+      "generated_at_utc": "2026-11-26T17:37:14.122772+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-146",
+      "generated_at_utc": "2026-11-26T17:37:24.046204+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-147",
+      "generated_at_utc": "2026-11-26T17:37:36.720797+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-148",
+      "generated_at_utc": "2026-11-26T17:37:48.641528+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-149",
+      "generated_at_utc": "2026-11-26T17:38:01.233003+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-150",
+      "generated_at_utc": "2026-11-26T17:38:15.034743+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-151",
+      "generated_at_utc": "2026-11-26T17:38:22.152418+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-152",
+      "generated_at_utc": "2026-11-26T17:38:39.453279+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-153",
+      "generated_at_utc": "2026-11-26T17:38:52.241403+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-154",
+      "generated_at_utc": "2026-11-26T17:39:06.874390+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-155",
+      "generated_at_utc": "2026-11-26T17:39:23.145560+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-156",
+      "generated_at_utc": "2026-11-26T17:39:35.978049+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-157",
+      "generated_at_utc": "2026-11-26T17:39:45.331223+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-158",
+      "generated_at_utc": "2026-11-26T17:40:02.876745+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-159",
+      "generated_at_utc": "2026-11-26T17:40:16.887999+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-160",
+      "generated_at_utc": "2026-11-26T17:40:27.419764+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-161",
+      "generated_at_utc": "2026-11-26T17:40:35.426264+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-162",
+      "generated_at_utc": "2026-11-26T17:40:54.883632+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-163",
+      "generated_at_utc": "2026-11-26T17:41:11.578866+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-164",
+      "generated_at_utc": "2026-11-26T17:41:32.407119+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-165",
+      "generated_at_utc": "2026-11-26T17:41:52.180777+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-166",
+      "generated_at_utc": "2026-11-26T17:42:10.875561+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-167",
+      "generated_at_utc": "2026-11-26T17:42:24.160294+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-168",
+      "generated_at_utc": "2026-11-26T17:42:45.569625+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-169",
+      "generated_at_utc": "2026-11-26T17:43:02.648842+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-170",
+      "generated_at_utc": "2026-11-26T17:43:14.370474+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-171",
+      "generated_at_utc": "2026-11-26T17:43:22.726651+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-172",
+      "generated_at_utc": "2026-11-26T17:43:37.393228+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-173",
+      "generated_at_utc": "2026-11-26T17:43:55.087248+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-174",
+      "generated_at_utc": "2026-11-26T17:44:13.859760+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-175",
+      "generated_at_utc": "2026-11-26T17:44:30.267967+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-176",
+      "generated_at_utc": "2026-11-26T17:44:47.814455+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-177",
+      "generated_at_utc": "2026-11-26T17:45:01.970977+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-178",
+      "generated_at_utc": "2026-11-26T17:45:21.694585+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-179",
+      "generated_at_utc": "2026-11-26T17:45:36.959711+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-180",
+      "generated_at_utc": "2026-11-26T17:45:48.003465+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-181",
+      "generated_at_utc": "2026-11-26T17:45:51.749641+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-182",
+      "generated_at_utc": "2026-11-26T17:46:07.784443+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-183",
+      "generated_at_utc": "2026-11-26T17:46:23.332070+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-184",
+      "generated_at_utc": "2026-11-26T17:46:40.530257+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-185",
+      "generated_at_utc": "2026-11-26T17:47:03.758997+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-186",
+      "generated_at_utc": "2026-11-26T17:47:24.557305+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-187",
+      "generated_at_utc": "2026-11-26T17:47:52.193526+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-188",
+      "generated_at_utc": "2026-11-26T17:48:21.162570+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-189",
+      "generated_at_utc": "2026-11-26T17:48:47.071304+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-190",
+      "generated_at_utc": "2026-11-26T17:49:20.242542+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-191",
+      "generated_at_utc": "2026-11-26T17:49:39.986768+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-192",
+      "generated_at_utc": "2026-11-26T17:50:22.103595+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-193",
+      "generated_at_utc": "2026-11-26T17:50:47.165209+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-194",
+      "generated_at_utc": "2026-11-26T17:51:19.416328+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-195",
+      "generated_at_utc": "2026-11-26T17:51:38.956496+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-196",
+      "generated_at_utc": "2026-11-26T17:52:00.827039+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-197",
+      "generated_at_utc": "2026-11-26T17:52:23.510204+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-198",
+      "generated_at_utc": "2026-11-26T17:53:01.007994+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-199",
+      "generated_at_utc": "2026-11-26T17:53:35.845690+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-200",
+      "generated_at_utc": "2026-11-26T17:53:52.364059+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-201",
+      "generated_at_utc": "2026-11-26T17:54:07.908611+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-202",
+      "generated_at_utc": "2026-11-26T17:54:37.825370+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-203",
+      "generated_at_utc": "2026-11-26T17:54:58.508451+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-204",
+      "generated_at_utc": "2026-11-26T17:55:22.644408+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-205",
+      "generated_at_utc": "2026-11-26T17:55:59.012216+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-206",
+      "generated_at_utc": "2026-11-26T17:56:21.914367+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-207",
+      "generated_at_utc": "2026-11-26T17:56:42.556614+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-208",
+      "generated_at_utc": "2026-11-26T17:57:17.587706+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-209",
+      "generated_at_utc": "2026-11-26T17:57:40.134087+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-210",
+      "generated_at_utc": "2026-11-26T17:57:56.845239+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-211",
+      "generated_at_utc": "2026-11-26T17:58:07.056676+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-212",
+      "generated_at_utc": "2026-11-26T17:58:30.497368+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-213",
+      "generated_at_utc": "2026-11-26T17:58:48.405779+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-214",
+      "generated_at_utc": "2026-11-26T17:59:19.241386+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-215",
+      "generated_at_utc": "2026-11-26T17:59:49.352332+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-216",
+      "generated_at_utc": "2026-11-26T18:00:11.016906+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-217",
+      "generated_at_utc": "2026-11-26T18:00:37.394838+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-218",
+      "generated_at_utc": "2026-11-26T18:01:05.393714+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-219",
+      "generated_at_utc": "2026-11-26T18:01:32.394438+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-220",
+      "generated_at_utc": "2026-11-26T18:01:47.315589+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-221",
+      "generated_at_utc": "2026-11-26T18:01:59.207211+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-222",
+      "generated_at_utc": "2026-11-26T18:02:40.413433+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-223",
+      "generated_at_utc": "2026-11-26T18:03:14.959803+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-224",
+      "generated_at_utc": "2026-11-26T18:03:55.653063+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-225",
+      "generated_at_utc": "2026-11-26T18:04:27.843783+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-226",
+      "generated_at_utc": "2026-11-26T18:04:48.545100+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-227",
+      "generated_at_utc": "2026-11-26T18:05:10.577007+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-228",
+      "generated_at_utc": "2026-11-26T18:05:36.491928+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-229",
+      "generated_at_utc": "2026-11-26T18:05:55.882392+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-230",
+      "generated_at_utc": "2026-11-26T18:06:20.924577+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-231",
+      "generated_at_utc": "2026-11-26T18:06:36.208146+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-232",
+      "generated_at_utc": "2026-11-26T18:06:58.109836+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-233",
+      "generated_at_utc": "2026-11-26T18:07:17.738593+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-234",
+      "generated_at_utc": "2026-11-26T18:07:40.710588+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-235",
+      "generated_at_utc": "2026-11-26T18:08:02.639909+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-236",
+      "generated_at_utc": "2026-11-26T18:08:23.441707+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-237",
+      "generated_at_utc": "2026-11-26T18:08:43.526441+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-238",
+      "generated_at_utc": "2026-11-26T18:09:09.787665+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-239",
+      "generated_at_utc": "2026-11-26T18:09:34.707191+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-240",
+      "generated_at_utc": "2026-11-26T18:09:50.130661+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-241",
+      "generated_at_utc": "2026-11-26T18:09:58.553634+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-242",
+      "generated_at_utc": "2026-11-26T18:10:25.956597+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-243",
+      "generated_at_utc": "2026-11-26T18:10:44.639770+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-244",
+      "generated_at_utc": "2026-11-26T18:11:11.402398+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-245",
+      "generated_at_utc": "2026-11-26T18:11:32.731224+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-246",
+      "generated_at_utc": "2026-11-26T18:11:51.150896+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-247",
+      "generated_at_utc": "2026-11-26T18:12:09.568791+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-248",
+      "generated_at_utc": "2026-11-26T18:12:37.930551+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-249",
+      "generated_at_utc": "2026-11-26T18:13:04.572654+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-250",
+      "generated_at_utc": "2026-11-26T18:13:24.101094+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-251",
+      "generated_at_utc": "2026-11-26T18:13:35.189687+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-252",
+      "generated_at_utc": "2026-11-26T18:14:09.923481+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-253",
+      "generated_at_utc": "2026-11-26T18:14:33.498759+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-254",
+      "generated_at_utc": "2026-11-26T18:15:02.661133+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-255",
+      "generated_at_utc": "2026-11-26T18:15:19.853737+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-256",
+      "generated_at_utc": "2026-11-26T18:15:37.465306+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-257",
+      "generated_at_utc": "2026-11-26T18:15:55.752671+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-258",
+      "generated_at_utc": "2026-11-26T18:16:21.822062+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-259",
+      "generated_at_utc": "2026-11-26T18:16:46.309933+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-260",
+      "generated_at_utc": "2026-11-26T18:17:03.632595+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-261",
+      "generated_at_utc": "2026-11-26T18:17:11.270955+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-262",
+      "generated_at_utc": "2026-11-26T18:17:31.979735+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-263",
+      "generated_at_utc": "2026-11-26T18:17:48.169339+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-264",
+      "generated_at_utc": "2026-11-26T18:18:12.569165+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-265",
+      "generated_at_utc": "2026-11-26T18:18:36.547297+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-266",
+      "generated_at_utc": "2026-11-26T18:18:55.571847+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-267",
+      "generated_at_utc": "2026-11-26T18:19:13.558351+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-268",
+      "generated_at_utc": "2026-11-26T18:19:42.547807+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-269",
+      "generated_at_utc": "2026-11-26T18:20:03.536793+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-270",
+      "generated_at_utc": "2026-11-26T18:20:16.797763+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-271",
+      "generated_at_utc": "2026-11-26T18:20:31.462194+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-272",
+      "generated_at_utc": "2026-11-26T18:20:57.000155+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-273",
+      "generated_at_utc": "2026-11-26T18:21:16.169872+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-274",
+      "generated_at_utc": "2026-11-26T18:21:29.609856+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-275",
+      "generated_at_utc": "2026-11-26T18:21:59.612761+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-276",
+      "generated_at_utc": "2026-11-26T18:22:14.902635+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-277",
+      "generated_at_utc": "2026-11-26T18:22:34.664826+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-278",
+      "generated_at_utc": "2026-11-26T18:22:56.885106+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-279",
+      "generated_at_utc": "2026-11-26T18:23:14.287877+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-280",
+      "generated_at_utc": "2026-11-26T18:23:27.076449+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-281",
+      "generated_at_utc": "2026-11-26T18:23:37.152900+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-282",
+      "generated_at_utc": "2026-11-26T18:23:58.676442+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-283",
+      "generated_at_utc": "2026-11-26T18:24:17.554554+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-284",
+      "generated_at_utc": "2026-11-26T18:24:44.579383+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-285",
+      "generated_at_utc": "2026-11-26T18:25:04.018529+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-286",
+      "generated_at_utc": "2026-11-26T18:25:27.668205+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-287",
+      "generated_at_utc": "2026-11-26T18:25:48.243941+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-288",
+      "generated_at_utc": "2026-11-26T18:26:20.833797+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-289",
+      "generated_at_utc": "2026-11-26T18:26:42.133990+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-290",
+      "generated_at_utc": "2026-11-26T18:27:12.697626+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-291",
+      "generated_at_utc": "2026-11-26T18:27:30.002895+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-292",
+      "generated_at_utc": "2026-11-26T18:27:57.445760+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-293",
+      "generated_at_utc": "2026-11-26T18:28:20.257726+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-294",
+      "generated_at_utc": "2026-11-26T18:28:50.324614+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-295",
+      "generated_at_utc": "2026-11-26T18:29:25.897507+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-296",
+      "generated_at_utc": "2026-11-26T18:29:57.266933+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-297",
+      "generated_at_utc": "2026-11-26T18:30:15.584769+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-298",
+      "generated_at_utc": "2026-11-26T18:30:40.826371+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-299",
+      "generated_at_utc": "2026-11-26T18:31:02.351518+00:00"
+    },
+    {
+      "model_name": "gemma2:2b",
+      "dataset_item_id": "healthcare-300",
+      "generated_at_utc": "2026-11-26T18:31:14.008723+00:00"
+    }
+  ],
+  "complete": true,
+  "created_at_utc": "2026-11-26T17:04:53.020658+00:00",
+  "updated_at_utc": "2026-11-26T18:31:14.030343+00:00"
+}

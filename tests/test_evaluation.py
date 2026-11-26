@@ -18,7 +18,7 @@ class FakeRetriever:
         self.calls = []
 
     def retrieve(self, claim, top_k=5):
-        self.calls.append((claim.text, top_k))
+        self.calls.append((claim.text, top_k, claim.topic_id))
         return (
             RetrievedEvidence(
                 evidence=Evidence("gold-evidence", f"Evidence for: {claim.text}"),
@@ -100,7 +100,7 @@ def test_evaluator_runs_same_components_for_full_matrix_and_reports_metrics():
         ("item-2", "model-b"),
     ]
     assert len(retriever.calls) == 4
-    assert all(top_k == 3 for _, top_k in retriever.calls)
+    assert all(top_k == 3 for _, top_k, _ in retriever.calls)
 
     model_a, model_b = report.model_metrics
     assert model_a.supported_rate == 1.0
@@ -131,6 +131,25 @@ def test_trust_score_is_not_reported_without_external_consistency_signal():
 
     assert all(item.trust_score is None for item in report.responses)
     assert all(metrics.average_trust_score is None for metrics in report.model_metrics)
+
+
+def test_evaluator_propagates_response_topic_to_claims():
+    retriever = FakeRetriever()
+    responses = tuple(
+        ModelResponse(
+            response.model_name,
+            response.dataset_item_id,
+            response.text,
+            response.confidence,
+            topic_id="topic-a",
+        )
+        for response in complete_response_matrix()
+    )
+
+    make_evaluator(retriever).evaluate(responses)
+
+    assert len(retriever.calls) == 4
+    assert all(topic_id == "topic-a" for _, _, topic_id in retriever.calls)
 
 
 @pytest.mark.parametrize(

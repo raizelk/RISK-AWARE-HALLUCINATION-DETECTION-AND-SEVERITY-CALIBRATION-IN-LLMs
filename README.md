@@ -68,7 +68,9 @@ Each trusted evidence record uses this format:
   "text": "Reference passage used to verify model claims.",
   "source": "World Health Organization",
   "source_url": "https://www.who.int/...",
-  "publication_date": "2023-09-15"
+  "publication_date": null,
+  "last_reviewed_date": null,
+  "accessed_date": "2026-11-09"
 }
 ```
 
@@ -76,7 +78,94 @@ The evidence `text` is the content indexed by the retriever. The source
 metadata makes each verification result traceable. These are starter records
 for pipeline development; research results require source review, exact URL
 verification, version locking, and independent human annotation of generated
-claims.
+claims. Do not infer publication dates: use `null` if the source does not state
+one, record an explicitly stated review date separately, and retain the date
+the source page was accessed.
+
+## Response generation pilot
+
+The provider-neutral `LLMAdapter` interface is implemented for Gemini 2.5
+Flash, Groq GPT-OSS-120B, and OpenRouter DeepSeek R1 Free. The default run
+uses the first eight healthcare prompts as a pilot and sends each original
+prompt unchanged to all three providers with shared temperature, top-p, and
+output-token settings. It saves response records in JSONL, including prompt
+and topic IDs, model/version, timestamp, generation parameters, response text,
+and a prompt hash. Provider failures are recorded in a neighboring
+`.errors.jsonl` file; credentials and provider response bodies are never saved
+there. The run manifest fingerprints the input files and adapter settings.
+
+Set credentials in the local environment (do not put them in source control):
+
+```powershell
+$env:GEMINI_API_KEY = "..."
+$env:GROQ_API_KEY = "..."
+$env:OPENROUTER_API_KEY = "..."
+```
+
+`GOOGLE_API_KEY` may be used instead of `GEMINI_API_KEY`. The script reads
+credentials only from these environment variables; it does not accept keys as
+command-line arguments. The provider adapters use Python's standard-library
+HTTP client, so generation does not require provider SDKs.
+
+For a no-cost local run, install Ollama and download an open model:
+
+```powershell
+ollama pull qwen2.5:3b
+python scripts/run_real_evaluation.py `
+	--adapter-factory hallucination_detector.provider_adapters:create_ollama_adapter `
+	--max-items 5 `
+	--generate-only `
+	--max-output-tokens 1024 `
+	--timeout-seconds 300 `
+	--responses data/local-qwen2.5-3b-ollama-pilot.jsonl
+```
+
+This sends requests to the local Ollama service and does not require paid API
+credentials. It evaluates one local model, so it is useful for pipeline testing
+but does not replace the planned three-model comparison. If benchmark inputs
+have changed, review them and update the freeze manifest before running; create
+a new topic split before any later calibration.
+
+Evidence retrieval is scoped to the response topic when topic metadata is
+available, preventing passages from unrelated healthcare topics from being
+used to verify a claim. `data/healthcare/trusted_evidence_supplement.jsonl`
+contains additional passages from WHO, CDC, NIH institutes, MedlinePlus, and
+NHS; `data/healthcare/trusted_evidence_expanded.jsonl` combines them with the
+original evidence. This supplement is exploratory and is not a frozen or
+human-adjudicated benchmark. Review the sources, refresh the freeze manifest,
+and regenerate the topic split before using it for calibration or research
+conclusions. Do not lower verification thresholds solely to reduce the
+`unknown` rate without labeled development data.
+
+Install the project's verification dependencies before running the integrated
+pilot, which continues from generation into claim extraction, retrieval, NLI
+verification, and severity scoring:
+
+```powershell
+pip install -e ".[verification]"
+python scripts/run_real_evaluation.py `
+	--responses data/pilot-responses.jsonl `
+	--report data/pilot-evaluation-report.json
+```
+
+Each successful model/prompt response is checkpointed immediately. If a
+provider fails, resolve the provider issue and rerun the same command with
+`--resume`; completed responses are not regenerated. The evaluation report is
+a claim-level review artifact with extracted claims, retrieved evidence IDs,
+NLI scores, and provisional severity assessments. It contains no human labels.
+Create prediction-free annotation worksheets only after reviewing the report:
+
+```powershell
+python scripts/export_annotation_template.py `
+	--responses data/pilot-responses.jsonl `
+	--output data/annotations/reviewer-a.jsonl `
+	--annotator-id reviewer-a
+```
+
+After validating the pilot and annotation process, scale to all 300 prompts by
+using `--max-items 300` and new response/report paths. Use `--generate-only`
+to save responses without running verification. Do not fit calibration
+thresholds until complete human-adjudicated annotations are available.
 
 ### How `trusted_evidence.jsonl` is created
 

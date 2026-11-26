@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import importlib
+import inspect
 import json
 import sys
 from dataclasses import replace
@@ -19,20 +20,37 @@ from hallucination_detector.calibration import evaluate_severity
 from hallucination_detector.domain import ModelResponse
 from hallucination_detector.evaluation import ModelComparisonEvaluator
 from hallucination_detector.generation import JsonlResponseStore, LLMAdapter
+from hallucination_detector.provider_adapters import (
+    GenerationSettings,
+    ProviderRequestError,
+    create_default_adapters,
+)
 from hallucination_detector.retrieval import HybridEvidenceRetriever, SentenceTransformerEmbedder
 from hallucination_detector.runner import load_benchmark, run_generation, write_json_atomic
 from hallucination_detector.severity import SeverityClassifier
 from hallucination_detector.verification import EmbeddingSimilarityScorer, HuggingFaceNLIModel
 
 
-def _load_adapters(factory_spec: str) -> tuple[LLMAdapter, ...]:
+def _load_adapters(
+    factory_spec: str | None,
+    generation_settings: GenerationSettings,
+) -> tuple[LLMAdapter, ...]:
+    if factory_spec is None:
+        return create_default_adapters(generation_settings)
     module_name, separator, function_name = factory_spec.partition(":")
     if not separator or not module_name or not function_name:
         raise ValueError("Adapter factory must use module.path:function_name syntax.")
     factory: Any = getattr(importlib.import_module(module_name), function_name, None)
     if not callable(factory):
         raise ValueError(f"Adapter factory {factory_spec!r} is not callable.")
-    adapters = tuple(factory())
+    try:
+        factory_parameters = inspect.signature(factory).parameters
+    except (TypeError, ValueError):
+        factory_parameters = {}
+    if "generation_settings" in factory_parameters:
+        adapters = tuple(factory(generation_settings=generation_settings))
+    else:
+        adapters = tuple(factory())
     if not adapters:
         raise ValueError("Adapter factory must return at least one adapter.")
     return adapters
@@ -172,8 +190,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--max-items",
         type=int,
-        default=5,
-        help="number of prompts for generation (default: 5; use 300 for the full Phase 1 set)",
+        default=8,
+        help="number of prompts for generation (default: 8 for the pilot; use 300 for Phase 1)",
     )
     parser.add_argument("--resume", action="store_true", help="resume a matching generation run")
     parser.add_argument(
@@ -186,6 +204,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--support-threshold", type=float, default=0.55)
     parser.add_argument("--contradiction-threshold", type=float, default=0.55)
     parser.add_argument("--severity-contradiction-threshold", type=float, default=0.8)
+    parser.add_argument("--temperature", type=float, default=0.2)
+    parser.add_argument("--top-p", type=float, default=1.0)
+    parser.add_argument("--max-output-tokens", type=int, default=1024)
+    parser.add_argument("--timeout-seconds", type=int, default=120)
     parser.add_argument("--split-manifest", type=Path)
     parser.add_argument("--dataset-split", choices=("train", "dev", "test"))
     parser.add_argument("--nli-model", default="facebook/bart-large-mnli")
@@ -204,6 +226,8 @@ def main(argv: list[str] | None = None) -> int:
         parser.error("--resume applies only to generation.")
     if args.top_k < 1:
         parser.error("--top-k must be at least 1.")
+    if args.max_output_tokens < 1 or args.timeout_seconds < 1:
+        parser.error("--max-output-tokens and --timeout-seconds must be at least 1.")
     if (args.split_manifest is None) != (args.dataset_split is None):
         parser.error("--split-manifest and --dataset-split must be provided together.")
     if not args.evaluate_only and not args.adapter_factory:
@@ -278,7 +302,13 @@ def main(argv: list[str] | None = None) -> int:
             if not benchmark.prompts:
                 raise ValueError("The response file has no dataset items from this benchmark.")
         else:
-            adapters = _load_adapters(args.adapter_factory)
+            generation_settings = GenerationSettings(
+                temperature=args.temperature,
+                top_p=args.top_p,
+                max_output_tokens=args.max_output_tokens,
+                timeout_seconds=args.timeout_seconds,
+            )
+            adapters = _load_adapters(args.adapter_factory, generation_settings)
             responses = run_generation(
                 benchmark.prompts,
                 adapters,
@@ -302,7 +332,14 @@ def main(argv: list[str] | None = None) -> int:
                 gold_annotations=gold_annotations if args.evaluate_only else None,
                 report_path=args.report,
             )
-    except (ImportError, KeyError, OSError, TypeError, ValueError) as error:
+    except (
+        ImportError,
+        KeyError,
+        OSError,
+        ProviderRequestError,
+        TypeError,
+        ValueError,
+    ) as error:
         print(f"ERROR: {error}", file=sys.stderr)
         return 1
     return 0

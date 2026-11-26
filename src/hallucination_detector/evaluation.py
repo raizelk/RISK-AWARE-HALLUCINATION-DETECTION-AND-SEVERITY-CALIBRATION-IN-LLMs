@@ -13,7 +13,7 @@ import math
 import random
 from collections import Counter
 from collections.abc import Callable, Collection, Mapping, Sequence
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 from typing import Protocol
 
@@ -257,7 +257,12 @@ class ModelComparisonEvaluator:
         for item_id in self._dataset_item_ids:
             for model_name in self._model_names:
                 response = response_by_key[(model_name, item_id)]
-                claims = tuple(self._claim_extractor(response.text))
+                claims = tuple(
+                    replace(claim, topic_id=response.topic_id)
+                    if response.topic_id is not None
+                    else claim
+                    for claim in self._claim_extractor(response.text)
+                )
                 claim_ids = [claim.id for claim in claims]
                 if len(set(claim_ids)) != len(claim_ids):
                     raise ValueError(

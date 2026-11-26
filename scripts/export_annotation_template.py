@@ -84,6 +84,8 @@ def export_template(
                     "source": record["source"],
                     "source_url": record["source_url"],
                     "publication_date": record["publication_date"],
+                    "last_reviewed_date": record.get("last_reviewed_date"),
+                    "accessed_date": record.get("accessed_date"),
                 }
             )
         claims = extract_claims(response.text)
