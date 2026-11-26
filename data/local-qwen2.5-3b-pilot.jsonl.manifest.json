@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "prompt_sha256": "09461ac67e43d389b6d0725ba89324dc511fab60053812353e4b924968e68ee5",
+  "evidence_sha256": "fa26e77870bd5bc61dd6e1ed80900d743b621cf0396d914b7082d465779b2cac",
+  "dataset_item_ids": [
+    "healthcare-001",
+    "healthcare-002",
+    "healthcare-003",
+    "healthcare-004",
+    "healthcare-005"
+  ],
+  "adapters": [
+    {
+      "model_name": "qwen2.5:3b",
+      "adapter_type": "live_adapters.OpenAICompatibleAdapter",
+      "metadata": {
+        "provider": "ollama",
+        "model_version": "qwen2.5:3b",
+        "research_use": false
+      }
+    }
+  ],
+  "expected_response_count": 5,
+  "completed_response_count": 5,
+  "completed_response_metadata": [
+    {
+      "model_name": "qwen2.5:3b",
+      "dataset_item_id": "healthcare-001",
+      "generated_at_utc": "2026-11-21T18:05:33.597622+00:00"
+    },
+    {
+      "model_name": "qwen2.5:3b",
+      "dataset_item_id": "healthcare-002",
+      "generated_at_utc": "2026-11-21T18:09:35.721205+00:00"
+    },
+    {
+      "model_name": "qwen2.5:3b",
+      "dataset_item_id": "healthcare-003",
+      "generated_at_utc": "2026-11-21T18:10:15.673317+00:00"
+    },
+    {
+      "model_name": "qwen2.5:3b",
+      "dataset_item_id": "healthcare-004",
+      "generated_at_utc": "2026-11-21T18:10:53.841494+00:00"
+    },
+    {
+      "model_name": "qwen2.5:3b",
+      "dataset_item_id": "healthcare-005",
+      "generated_at_utc": "2026-11-21T18:11:29.331881+00:00"
+    }
+  ],
+  "complete": true,
+  "created_at_utc": "2026-11-21T18:04:53.249436+00:00",
+  "updated_at_utc": "2026-11-21T18:11:29.334516+00:00"
+}

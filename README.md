@@ -375,6 +375,12 @@ Supported claims use a null severity; contradicted and unknown claims require a
 severity. Use only evidence IDs from the trusted evidence file, and cite the
 passages that are relevant to the claim.
 
+Claim extraction is a deterministic heuristic, not a full syntactic parser. It
+filters common introductory phrases, Markdown headings, and fragments without
+a complete statement predicate while preserving response offsets. Reviewers
+must still correct claim spans and split or merge non-atomic claims before
+annotation.
+
 ```powershell
 python scripts/export_annotation_template.py `
 	--responses data/pilot-responses.jsonl `
@@ -636,7 +642,35 @@ python scripts/run_real_evaluation.py `
 ```
 
 The adapter module must be importable by Python and return one adapter per
-model. Use `--generate-only` to collect responses without downloading the NLI
+model.
+
+Live REST adapters are available in `live_adapters.py`. Set keys only in the
+current shell or a local `.env` ignored by Git; never commit them:
+
+```powershell
+$env:HY3_API_KEY = "..."
+$env:GROQ_API_KEY = "..."       # the gsk_ key is a Groq key
+$env:DEEPSEEK_API_KEY = "..."
+
+# Optional model overrides
+$env:HY3_MODEL = "hy3:free"
+$env:HY3_BASE_URL = "https://openrouter.ai/api/v1"
+$env:GROQ_MODEL = "llama-3.3-70b-versatile"
+$env:DEEPSEEK_MODEL = "deepseek-chat"
+
+python scripts/run_real_evaluation.py `
+  --adapter-factory live_adapters:build_adapters `
+  --max-items 5 `
+  --generate-only `
+  --responses data/pilot-responses.jsonl
+```
+
+The API keys in chat transcripts are credentials and should be revoked and
+reissued immediately before use. `GROK_API_KEY` is accepted only as a temporary
+alias for a Groq `gsk_` key; an xAI/Grok endpoint requires its own endpoint and
+compatibility implementation.
+
+Use `--generate-only` to collect responses without downloading the NLI
 and embedding models. Use `--resume` with the same files, adapter metadata, and
 item selection to continue an interrupted generation run; mismatched dataset
 hashes or model configurations are rejected. To evaluate saved responses

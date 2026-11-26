@@ -1,0 +1,19 @@
+# Secrets
+.env
+.env.*
+*.key
+*.pem
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Test and research outputs
+.pytest_cache/
+data/pilot-responses.jsonl
+data/pilot-responses.jsonl.manifest.json
+data/evaluation_report.json
+data/live-pilot-responses.jsonl*

@@ -63,10 +63,10 @@ def make_evaluator(retriever=None, *, repetitions=250):
 
 def complete_response_matrix():
     return (
-        ModelResponse("model-a", "item-1", "Supported claim.", 0.9),
-        ModelResponse("model-b", "item-1", "Contradicted claim.", 0.2),
-        ModelResponse("model-a", "item-2", "Supported claim.", 0.85),
-        ModelResponse("model-b", "item-2", "Unknown claim.", 0.8),
+        ModelResponse("model-a", "item-1", "Supported claim is true.", 0.9),
+        ModelResponse("model-b", "item-1", "Contradicted claim is false.", 0.2),
+        ModelResponse("model-a", "item-2", "Supported claim is true.", 0.85),
+        ModelResponse("model-b", "item-2", "Unknown claim is uncertain.", 0.8),
     )
 
 

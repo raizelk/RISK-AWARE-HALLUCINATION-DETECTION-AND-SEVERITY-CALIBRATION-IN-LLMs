@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "prompt_sha256": "09461ac67e43d389b6d0725ba89324dc511fab60053812353e4b924968e68ee5",
+  "evidence_sha256": "fa26e77870bd5bc61dd6e1ed80900d743b621cf0396d914b7082d465779b2cac",
+  "dataset_item_ids": [
+    "healthcare-001",
+    "healthcare-002",
+    "healthcare-003",
+    "healthcare-004",
+    "healthcare-005"
+  ],
+  "models": [
+    "qwen2.5:3b"
+  ],
+  "top_k": 5,
+  "support_threshold": 0.55,
+  "contradiction_threshold": 0.55,
+  "severity_contradiction_threshold": 0.8,
+  "nli_model": "facebook/bart-large-mnli",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "benchmark_frozen": true,
+  "severity_metrics_vs_gold": null
+}
